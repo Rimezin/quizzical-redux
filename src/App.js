@@ -20,8 +20,8 @@ export default function App() {
     setCategory(event.target.value);
   }
 
-  function handleDark(event) {
-    event.preventDefault();
+  function handleDark() {
+    // event.preventDefault();
     setDark(!dark);
   }
 
