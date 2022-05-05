@@ -1,10 +1,17 @@
 import React from "react";
+import { Button, ButtonGroup } from "semantic-ui-react";
 import Toggle from "./Toggle";
-// import Logo from "./Logo";
 
 export default function Splash(props) {
   const { clickStart, chooseDifficulty, chooseCategory, dark, handleDark } =
     props;
+
+  function handleDifficulty(event) {
+    event.preventDefault();
+    const diff = event.target.value;
+    console.log(diff);
+    chooseDifficulty(diff);
+  }
 
   return (
     <form
@@ -61,14 +68,34 @@ export default function Splash(props) {
       <span style={dark ? { color: "#aca7c8" } : { color: "#191632" }}>
         Choose your destiny:
       </span>
-      <select
+      <ButtonGroup>
+        <Button
+          color="violet"
+          content="Easy"
+          onClick={handleDifficulty}
+          value="easy"
+        />
+        <Button
+          color="purple"
+          content="Medium"
+          onClick={handleDifficulty}
+          value="medium"
+        />
+        <Button
+          color="pink"
+          content="Hard"
+          onClick={handleDifficulty}
+          value="hard"
+        />
+      </ButtonGroup>
+      {/* <select
         id="difficultySelector"
         onChange={(value) => chooseDifficulty(value)}
       >
         <option name="easy">Easy</option>
         <option name="medium">Medium</option>
         <option name="hard">Hard</option>
-      </select>
+      </select> */}
       <select id="categorySelector" onChange={(value) => chooseCategory(value)}>
         <option value="any">Any Category</option>
         <option value="27">Animals</option>

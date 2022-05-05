@@ -13,15 +13,16 @@ export default function App() {
     setStartQuiz((startQuiz) => !startQuiz);
   }
 
-  function chooseDifficulty(event) {
-    setDifficulty(event.target.value.toLowerCase());
+  function chooseDifficulty(value) {
+    setDifficulty(value.toLowerCase());
+    // setDifficulty(event.target.value.toLowerCase());
   }
   function chooseCategory(event) {
     setCategory(event.target.value);
   }
 
-  function handleDark() {
-    // event.preventDefault();
+  function handleDark(event) {
+    event.preventDefault();
     setDark(!dark);
   }
 

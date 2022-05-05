@@ -38,6 +38,7 @@ export default function Answer(props) {
   const answerStyling = {
     backgroundColor: setBackground(),
     color: setColor(),
+    margin: "0.5em",
   };
 
   // Function to simulate <input> click if user clicks outside of text
@@ -46,9 +47,10 @@ export default function Answer(props) {
   }
 
   // Set up answer class //
-  let ansClass = "question-answer";
-  ansClass += dark ? " question-answer-dark" : "";
-  ansClass += submitted ? " disabled" : "";
+
+  let ansClass = `ui huge button answer answer-grey ${
+    dark ? "question-answer-dark" : ""
+  } ${submitted ? "disabled" : ""}`;
 
   return (
     <div className={ansClass} style={answerStyling} onClick={handleClick}>
@@ -61,7 +63,9 @@ export default function Answer(props) {
         style={{ display: "none" }}
         onChange={handleChange}
       />
-      <label htmlFor={answer.answerId}>{answer.answerLabel}</label>
+      <label htmlFor={answer.answerId} style={{ pointerEvents: "none" }}>
+        {answer.answerLabel}
+      </label>
     </div>
   );
 }

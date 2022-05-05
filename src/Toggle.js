@@ -1,16 +1,19 @@
 import React from "react";
+import { Button } from "semantic-ui-react";
 
 export default function Toggle(props) {
   const { toggleText, dark, handleDark } = props;
 
   return (
-    <div>
-      <button
-        className={dark ? "toggle toggle-dark" : "toggle"}
-        onClick={handleDark}
-      >
-        {toggleText}
-      </button>
-    </div>
+    <Button
+      basic
+      floated="left"
+      style={{ margin: "10px" }}
+      color={dark ? "grey" : "violet"}
+      className="toggle"
+      onClick={handleDark}
+    >
+      {toggleText}
+    </Button>
   );
 }

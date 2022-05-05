@@ -1,8 +1,9 @@
 import React from "react";
-import Question from "./Question";
+import QuestionRedux from "./QuestionRedux";
 import { nanoid } from "nanoid";
 import he from "he";
 import Toggle from "./Toggle";
+import { Button, ButtonGroup } from "semantic-ui-react";
 
 export default function Quiz(props) {
   const {
@@ -19,6 +20,7 @@ export default function Quiz(props) {
   const [submitted, setSubmitted] = React.useState(false);
   const [score, setScore] = React.useState(0);
   const [error, setError] = React.useState("");
+  const [stage, setStage] = React.useState(0);
 
   // This shuffle array function from coolaj86 on Stack Overflow.
   function shuffle(array) {
@@ -206,44 +208,54 @@ export default function Quiz(props) {
     setCategory("");
     setSubmitted(false);
     setScore(0);
+    setStage(0);
     setStartQuiz(false);
   }
 
   const renderQuestions = questions.map((question) => {
     return (
-      <Question
+      <QuestionRedux
         key={question.questionId}
         question={question}
-        answers={question.answers}
         handleChange={handleChange}
         submitted={submitted}
         dark={dark}
+        setStage={setStage}
       />
     );
   });
-
-  const quizStyles = {
-    display: "flex",
-    flexDirection: "column",
-  };
+  // const renderQuestions = questions.map((question) => {
+  //   return (
+  //     <Question
+  //       key={question.questionId}
+  //       questionIndex={questions.indexOf(question)}
+  //       question={question}
+  //       answers={question.answers}
+  //       handleChange={handleChange}
+  //       submitted={submitted}
+  //       dark={dark}
+  //       setStage={setStage}
+  //     />
+  //   );
+  // });
 
   return (
-    <div
-      className={dark ? "container container-dark" : "container"}
-      style={quizStyles}
-    >
-      <Toggle
-        toggleText={dark ? "Light" : "Dark"}
-        dark={dark}
-        handleDark={handleDark}
-      />
+    <div className={`container ${dark ? "container-dark" : ""} container-big`}>
+      <div style={{ display: "flex" }}>
+        <ButtonGroup>
+          <Toggle
+            toggleText={dark ? "Light" : "Dark"}
+            dark={dark}
+            handleDark={handleDark}
+          />
+          <Button color="grey" basic content={difficulty} disabled />
+        </ButtonGroup>
+      </div>
       <h2 className={dark ? "h2-dark" : ""}>
         Quizzical <br />
-        <span className="alpha" style={{ fontSize: "32px" }}>
-          ({difficulty})
-        </span>
       </h2>
-      {renderQuestions}
+      <div id="questions-container">{renderQuestions[stage]}</div>
+
       {error !== "" && (
         <span
           style={{

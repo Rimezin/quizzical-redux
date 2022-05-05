@@ -2,7 +2,8 @@ import React from "react";
 import Answer from "./Answer";
 
 export default function Question(props) {
-  const { question, answers, handleChange, submitted, dark } = props;
+  const { question, answers, handleChange, submitted, dark, questionIndex } =
+    props;
 
   const renderAnswers = answers.map((ans) => {
     return (
@@ -19,7 +20,8 @@ export default function Question(props) {
 
   return (
     <div
-      className={dark ? "quiz-question quiz-question-dark" : "quiz-question"}
+      className={`quiz-question ${dark ? "quiz-question-dark" : ""}`}
+      id={`question_${questionIndex}`}
     >
       <span
         className={dark ? "quiz-cat quiz-cat-dark" : "quiz-cat"}
@@ -28,7 +30,7 @@ export default function Question(props) {
         {question.category}
       </span>
       <h3 className={dark ? "h3-dark" : ""}>{question.question}</h3>
-      <fieldset>{renderAnswers}</fieldset>
+      <fieldset style={{ textAlign: "center" }}>{renderAnswers}</fieldset>
 
       <hr />
     </div>

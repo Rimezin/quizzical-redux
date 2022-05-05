@@ -1,3 +1,9 @@
+/* html,
+body {
+  height: 100vh;
+  overflow-y: hidden;
+} */
+
 * {
   box-sizing: border-box;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -58,9 +64,10 @@ h3 {
   background-color: darkslateblue;
   display: flex;
   justify-content: center;
-  vertical-align: middle;
+  align-items: center;
   transition: background-color 0.5s;
   width: 100%;
+  height: 100vh;
 }
 
 .body-dark {
@@ -75,14 +82,23 @@ h3 {
   user-select: none;
   transition: background-color 0.5s;
   position: relative;
+  overflow-y: auto;
+}
+
+.container-big {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  max-width: 600px;
 }
 
 .container-condensed {
   min-width: 350px;
   max-width: 400px;
   height: 550px;
-  margin-top: 5%;
-  margin-bottom: 20%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  margin: 5%;
 }
 
 .container-auto {
@@ -262,7 +278,7 @@ select:hover {
   opacity: 50%;
 }
 
-.question-answer {
+/* .question-answer {
   background: white;
   margin: 5px;
   padding: 8px;
@@ -298,6 +314,61 @@ select:hover {
 
 .question-answer-dark:active {
   box-shadow: inset 0px 0px 8px black;
+} */
+
+.answer {
+  background-color: white;
+  cursor: pointer;
+  display: inline-block;
+  min-height: 1em;
+  outline: 0;
+  border: none;
+  vertical-align: baseline;
+  background: #e0e1e2 none;
+  color: rgba(0, 0, 0, 0.6);
+  font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
+  margin: 0.25em;
+  padding: 0.78571429em 1.5em 0.78571429em;
+  text-transform: none;
+  text-shadow: none;
+  font-weight: 700;
+  line-height: 1em;
+  font-style: normal;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 0.28571429rem;
+  -webkit-box-shadow: 0 0 0 1px transparent inset,
+    0 0 0 0 rgb(34 36 38 / 15%) inset;
+  box-shadow: 0 0 0 1px transparent inset, 0 0 0 0 rgb(34 36 38 / 15%) inset;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: opacity 0.1s ease, background-color 0.1s ease,
+    color 0.1s ease, background 0.1s ease, -webkit-box-shadow 0.1s ease;
+  transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease,
+    background 0.1s ease, -webkit-box-shadow 0.1s ease;
+  transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease,
+    box-shadow 0.1s ease, background 0.1s ease;
+  transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease,
+    box-shadow 0.1s ease, background 0.1s ease, -webkit-box-shadow 0.1s ease;
+  will-change: "";
+  -webkit-tap-highlight-color: transparent;
+}
+
+.answer-grey {
+  background-color: #767676;
+  color: black;
+  text-shadow: none;
+}
+
+.answer-grey:hover {
+  background-color: #838383;
+}
+
+.question-buttons {
+  display: flex;
+  justify-content: center;
 }
 
 fieldset {
@@ -312,34 +383,6 @@ fieldset {
 
 hr {
   border: 1px solid #a39ec5;
-}
-
-.toggle {
-  color: #191632;
-  font-size: 14px;
-  border: 1px solid #191632;
-  border-radius: 8px;
-  background-color: transparent;
-  padding: 5px;
-  font-weight: 500;
-  float: right;
-  margin: 10px 10px 10px 10px;
-  transition: 0.5s;
-  position: sticky;
-}
-
-.toggle:hover {
-  background-image: linear-gradient(transparent, rgba(72, 61, 140, 0.5));
-}
-
-.toggle:active {
-  background-color: rgb(72, 61, 140);
-  box-shadow: inset 0px 0px 3px black;
-}
-
-.toggle-dark {
-  color: #aca7c8;
-  border: 1px solid #aca7c8;
 }
 
 .splash-text {
