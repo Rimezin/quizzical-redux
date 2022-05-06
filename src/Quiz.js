@@ -3,7 +3,8 @@ import QuestionRedux from "./QuestionRedux";
 import { nanoid } from "nanoid";
 import he from "he";
 import Toggle from "./Toggle";
-import { Button, ButtonGroup } from "semantic-ui-react";
+import { Button, ButtonGroup, Divider } from "semantic-ui-react";
+import Score from "./Score";
 
 export default function Quiz(props) {
   const {
@@ -19,7 +20,6 @@ export default function Quiz(props) {
   const [questions, setQuestions] = React.useState([]);
   const [submitted, setSubmitted] = React.useState(false);
   const [score, setScore] = React.useState(0);
-  const [error, setError] = React.useState("");
   const [stage, setStage] = React.useState(0);
 
   // This shuffle array function from coolaj86 on Stack Overflow.
@@ -57,34 +57,6 @@ export default function Quiz(props) {
 
     const apiUrl = `https://opentdb.com/api.php?amount=10&difficulty=${difficulty}&type=multiple${getCategory}`;
 
-    // Establish category colors
-    const catColors = {
-      "Science: Computers": "#EDBB99",
-      "Science: Gadgets": "#EDBB99",
-      "Science & Nature": "lightgreen",
-      "Science: Mathematics": "whitesmoke",
-      "Entertainment: Television": "#AED6F1",
-      "Entertainment: Film": "#A9CCE3",
-      "Entertainment: Board Games": "#9fefe7",
-      "Entertainment: Video Games": "#CCCCFF",
-      "Entertainment: Books": "#E9967A",
-      "Entertainment: Japanese Anime & Manga": "#9FE2BF",
-      "Entertainment: Music": "#ffe599",
-      "Entertainment: Cartoon & Animations": "#f5ffb2",
-      "Entertainment: Comics": "#f5ffb2",
-      "Entertainment: Musicals & Theatres": "#a39ec5",
-      Sports: "#D2B4DE",
-      Politics: "#D7BDE2",
-      Vehicles: "#E6B0AA",
-      Mythology: "#A3E4D7",
-      "General Knowledge": "lightgra,",
-      Geography: "#A2D9CE",
-      Celebrities: "#A9DFBF",
-      Art: "#F9E79F",
-      Animals: "#FAD7A0",
-      History: "#F5CBA7",
-    };
-
     fetch(apiUrl)
       .then((res) => res.json())
       .then((data) =>
@@ -95,7 +67,6 @@ export default function Quiz(props) {
             isCorrect: false,
             questionId: nanoid(),
             question: he.decode(questionObj.question),
-            catColor: catColors[questionObj.category],
             answers: getAnswers(questionObj).map((answer) => ({
               answerId: nanoid(),
               answerLabel: he.decode(answer),
@@ -165,42 +136,9 @@ export default function Quiz(props) {
 
         // Figure out if question was answered correctly //
         newQuestion.isCorrect = scoreQuestion(newQuestion);
-
         return newQuestion;
       })
     );
-  }
-
-  function handleSubmit() {
-    if (!submitted) {
-      let errorOut = false;
-      setError("");
-      // If not submitted, score the game.
-      let totalScore = 0;
-      for (let i = 0; i < 10; i++) {
-        let thisQuestion = questions[i];
-        if (!thisQuestion.isAnswered) {
-          setError("You forgot to answer some questions!");
-          errorOut = true;
-        } else {
-          if (thisQuestion.isCorrect) {
-            totalScore++;
-          }
-        }
-      }
-      if (!errorOut) {
-        setSubmitted(true);
-        setScore(totalScore);
-        setError("");
-      }
-    } else {
-      // If submitted, reset the game.
-      setDifficulty("easy");
-      setCategory("");
-      setSubmitted(false);
-      setScore(0);
-      setStartQuiz(false);
-    }
   }
 
   function handleReset() {
@@ -220,76 +158,58 @@ export default function Quiz(props) {
         handleChange={handleChange}
         submitted={submitted}
         dark={dark}
+        score={score}
+        handleReset={handleReset}
         setStage={setStage}
+        setScore={setScore}
       />
     );
   });
-  // const renderQuestions = questions.map((question) => {
-  //   return (
-  //     <Question
-  //       key={question.questionId}
-  //       questionIndex={questions.indexOf(question)}
-  //       question={question}
-  //       answers={question.answers}
-  //       handleChange={handleChange}
-  //       submitted={submitted}
-  //       dark={dark}
-  //       setStage={setStage}
-  //     />
-  //   );
-  // });
 
   return (
     <div className={`container ${dark ? "container-dark" : ""} container-big`}>
       <div style={{ display: "flex" }}>
-        <ButtonGroup>
-          <Toggle
-            toggleText={dark ? "Light" : "Dark"}
-            dark={dark}
-            handleDark={handleDark}
-          />
-          <Button color="grey" basic content={difficulty} disabled />
+        <ButtonGroup style={{ margin: "1rem" }}>
+          <Toggle dark={dark} handleDark={handleDark} />
+          {stage < 10 && (
+            <Button
+              color="violet"
+              content={`Score: ${score} of ${stage + 1}`}
+              inverted={dark ? true : false}
+              disabled
+            />
+          )}
+          {stage < 10 && (
+            <Button
+              color="purple"
+              inverted={dark ? true : false}
+              content={difficulty}
+              disabled
+            />
+          )}
         </ButtonGroup>
-      </div>
-      <h2 className={dark ? "h2-dark" : ""}>
-        Quizzical <br />
-      </h2>
-      <div id="questions-container">{renderQuestions[stage]}</div>
-
-      {error !== "" && (
-        <span
-          style={{
-            color: "red",
-            fontWeight: "700",
-            textAlign: "center",
-          }}
-        >
-          {error}
+        <span className={`little-logo henny ${dark ? "dark" : ""}`}>
+          Quizzical
         </span>
-      )}
-      <div className="container-finish">
-        {!submitted && (
-          <button
-            className={dark ? "button-lite button-lite-dark" : "button-lite"}
-            onClick={handleReset}
-          >
-            Reset
-          </button>
-        )}
-        <button
-          className={
-            dark ? "button-normal button-normal-dark" : "button-normal"
-          }
-          onClick={handleSubmit}
-        >
-          {submitted ? "New Game" : "Submit Answers"}
-        </button>
-        {submitted && (
-          <button className={dark ? "score score-dark" : "score"}>
-            Score: {score}/10
-          </button>
-        )}
       </div>
+      <Divider />
+      {stage < 10 && (
+        <div id="questions-container">{renderQuestions[stage]}</div>
+      )}
+
+      {stage === 10 && (
+        <div className="container-finish">
+          <Score score={score} />
+          <Button
+            color="violet"
+            inverted={dark ? true : false}
+            onClick={handleReset}
+            content="New Game"
+            style={{ width: "10rem" }}
+            icon="star"
+          />
+        </div>
+      )}
     </div>
   );
 }

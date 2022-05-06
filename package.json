@@ -10,8 +10,10 @@
     "he": "^1.2.0",
     "nanoid": "^3.3.4",
     "react": "^18.1.0",
+    "react-confetti": "^6.0.1",
     "react-dom": "^18.1.0",
     "react-scripts": "5.0.1",
+    "react-use": "^17.3.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.1.2",
     "web-vitals": "^2.1.4"

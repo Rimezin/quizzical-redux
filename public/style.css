@@ -6,7 +6,19 @@ body {
 
 * {
   box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Josefin Sans", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: 0.5s;
+}
+
+.henny {
+  font-family: "Henny Penny", cursive !important;
+}
+
+.little-logo {
+  color: #483d8b;
+  font-size: xx-large;
+  margin: 1.5rem;
+  padding-left: 0.75rem;
 }
 
 h1 {
@@ -14,11 +26,11 @@ h1 {
   color: #483d8b;
   font-size: 76px;
   transition: color 0.5s;
-  font-family: "Jua", sans-serif;
+  font-family: "Henny Penny", cursive;
   z-index: 999;
 }
 
-.h1-dark {
+.dark {
   color: #aca7c8;
 }
 
@@ -26,14 +38,10 @@ h2 {
   font-weight: 500;
   color: #483d8b;
   font-size: 64px;
-  margin: 0px 0px -5px 25px;
+  /* margin: 0px 0px -5px 25px; */
   text-align: center;
   transition: color 0.5s;
-  font-family: "Jua", sans-serif;
-}
-
-.h2-dark {
-  color: #aca7c8;
+  font-family: "Henny Penny", cursive;
 }
 
 h3 {
@@ -42,10 +50,6 @@ h3 {
   font-size: 20px;
   margin: 10px 10px 10px 10px;
   transition: color 0.5s;
-}
-
-.h3-dark {
-  color: #aca7c8;
 }
 
 .alpha {
@@ -82,7 +86,7 @@ h3 {
   user-select: none;
   transition: background-color 0.5s;
   position: relative;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 .container-big {
@@ -112,6 +116,7 @@ h3 {
   text-align: center;
   margin: 40px;
   display: flex;
+  flex-direction: column;
 }
 
 .container-dark {
@@ -189,27 +194,16 @@ h3 {
   border: 1px solid #a39ec5;
 }
 
-.score {
-  margin-left: 10px;
-  border: none;
-  width: auto;
-  min-height: 50px;
-  border-radius: 8px;
-  background-color: darkgray;
-  color: black;
-  font-weight: 500;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  box-shadow: inset 0px 0px 8px gray;
-  pointer-events: none;
-  user-select: none;
-  font-size: 1.5em;
-  transition: background-color 0.5s;
+.big-score {
+  font-size: 8rem;
+  margin: 5rem;
+  color: #483d8b;
 }
 
-.score-dark {
-  background-color: #2d2a4c;
-  color: #aca7c8;
-  box-shadow: inset 0px 0px 8px black;
+.score {
+  font-size: 3rem;
+  margin: 2rem;
+  color: #483d8b;
 }
 
 .small-text {
@@ -263,58 +257,31 @@ select:hover {
 }
 
 .quiz-cat {
-  font-size: 12px;
+  font-size: 18px;
   border: 1px solid darkgray;
   border-radius: 8px;
   background-color: lightgray;
   color: black;
   padding: 5px;
-  font-weight: 500;
+  font-weight: 700;
   opacity: 100%;
   transition: opacity 0.5s;
+  max-width: fit-content;
 }
 
 .quiz-cat-dark {
   opacity: 50%;
 }
 
-/* .question-answer {
-  background: white;
-  margin: 5px;
-  padding: 8px;
-  display: inline-flex;
-  min-width: 100px;
+.question-buttons {
+  display: flex;
   justify-content: center;
-  border: 1px solid darkgray;
-  border-radius: 8px;
-  user-select: none;
-  box-shadow: 0px 1px 4px darkslateblue;
-  font-weight: 500;
-  transition: background 0.25s;
 }
 
-.question-answer:hover {
-  color: darkslateblue;
-  background: linear-gradient(transparent, #a39ec5);
+.question-container {
+  overflow-y: auto;
+  max-height: 25rem;
 }
-
-.question-answer:active {
-  box-shadow: inset 0px 0px 8px darkslateblue;
-}
-
-.question-answer-dark {
-  background: #2d2a4c;
-  box-shadow: 0px 1px 4px black;
-}
-
-.question-answer-dark:hover {
-  color: #aca7c8;
-  background: linear-gradient(transparent, darkslateblue);
-}
-
-.question-answer-dark:active {
-  box-shadow: inset 0px 0px 8px black;
-} */
 
 .answer {
   background-color: white;
@@ -364,11 +331,6 @@ select:hover {
 
 .answer-grey:hover {
   background-color: #838383;
-}
-
-.question-buttons {
-  display: flex;
-  justify-content: center;
 }
 
 fieldset {

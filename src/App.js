@@ -17,8 +17,8 @@ export default function App() {
     setDifficulty(value.toLowerCase());
     // setDifficulty(event.target.value.toLowerCase());
   }
-  function chooseCategory(event) {
-    setCategory(event.target.value);
+  function chooseCategory(e, data) {
+    setCategory(data.value);
   }
 
   function handleDark(event) {

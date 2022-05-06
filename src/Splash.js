@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, ButtonGroup } from "semantic-ui-react";
+import { Button, ButtonGroup, Dropdown, Flag } from "semantic-ui-react";
 import Toggle from "./Toggle";
 
 export default function Splash(props) {
@@ -12,6 +12,234 @@ export default function Splash(props) {
     console.log(diff);
     chooseDifficulty(diff);
   }
+
+  const categories = [
+    {
+      value: "any",
+      icon: "question circle",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "any",
+      text: "Any Category",
+    },
+    {
+      value: "27",
+      icon: "sticker mule",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "27",
+      text: "Animals",
+    },
+    {
+      value: "25",
+      icon: "paint brush",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "25",
+      text: "Art",
+    },
+    {
+      value: "26",
+      icon: "star",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "26",
+      text: "Celebrities",
+    },
+    {
+      value: "16",
+      icon: "chess",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "16",
+      text: "Entertainment: Board Games",
+    },
+    {
+      value: "10",
+      icon: "book",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "10",
+      text: "Entertainment: Books",
+    },
+    {
+      value: "32",
+      icon: "smile",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "32",
+      text: "Entertainment: Cartoon & Animation",
+    },
+    {
+      value: "29",
+      icon: "newspaper",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "29",
+      text: "Entertainment: Comics",
+    },
+    {
+      value: "11",
+      icon: "film",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "11",
+      text: "Entertainment: Film",
+    },
+    {
+      value: "31",
+      icon: "certificate",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "31",
+      text: "Entertainment: Japanese Anime & Manga",
+    },
+    {
+      value: "12",
+      icon: "music",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "12",
+      text: "Entertainment: Music",
+    },
+    {
+      value: "13",
+      icon: "podcast",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "13",
+      text: "Entertainment: Musicals & Theatres",
+    },
+    {
+      value: "14",
+      icon: "tv",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "14",
+      text: "Entertainment: Television",
+    },
+    {
+      value: "15",
+      icon: "gamepad",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "15",
+      text: "Entertainment: Video Games",
+    },
+    {
+      value: "9",
+      icon: "cloud",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "9",
+      text: "General Knowledge",
+    },
+    {
+      value: "22",
+      icon: "tree",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "22",
+      text: "Geography",
+    },
+    {
+      value: "23",
+      icon: "globe",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "23",
+      text: "History",
+    },
+    {
+      value: "20",
+      icon: "bug",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "20",
+      text: "Mythology",
+    },
+    {
+      value: "24",
+      icon: "bullhorn",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "24",
+      text: "Politics",
+    },
+    {
+      value: "17",
+      icon: "rocket",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "17",
+      text: "Science & Nature",
+    },
+    {
+      value: "18",
+      icon: "laptop",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "18",
+      text: "Science: Computers",
+    },
+    {
+      value: "30",
+      icon: "headphones",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "30",
+      text: "Science: Gadgets",
+    },
+    {
+      value: "19",
+      icon: "calculator",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "19",
+      text: "Science: Mathematics",
+    },
+    {
+      value: "21",
+      icon: "football ball",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "21",
+      text: "Sports",
+    },
+    {
+      value: "28",
+      icon: "truck",
+      onClick: (e, d) => {
+        chooseCategory(e, d);
+      },
+      key: "28",
+      text: "Vehicles",
+    },
+  ];
 
   return (
     <form
@@ -57,14 +285,10 @@ export default function Splash(props) {
           transform="translate(100 100)"
         />
       </svg>
-      <Toggle
-        toggleText={dark ? "Light" : "Dark"}
-        dark={dark}
-        handleDark={handleDark}
-      />
+      <Toggle dark={dark} handleDark={handleDark} />
       <br />
-      {/* <Logo /> */}
-      <h1 className={dark ? "h1-dark" : ""}>Quizzical</h1>
+
+      <h1 className={dark ? "dark" : ""}>Quizzical</h1>
       <span style={dark ? { color: "#aca7c8" } : { color: "#191632" }}>
         Choose your destiny:
       </span>
@@ -74,72 +298,63 @@ export default function Splash(props) {
           content="Easy"
           onClick={handleDifficulty}
           value="easy"
+          toggle
         />
         <Button
           color="purple"
           content="Medium"
           onClick={handleDifficulty}
           value="medium"
+          toggle
         />
         <Button
           color="pink"
           content="Hard"
           onClick={handleDifficulty}
           value="hard"
+          toggle
         />
       </ButtonGroup>
-      {/* <select
-        id="difficultySelector"
-        onChange={(value) => chooseDifficulty(value)}
-      >
-        <option name="easy">Easy</option>
-        <option name="medium">Medium</option>
-        <option name="hard">Hard</option>
-      </select> */}
-      <select id="categorySelector" onChange={(value) => chooseCategory(value)}>
-        <option value="any">Any Category</option>
-        <option value="27">Animals</option>
-        <option value="25">Art</option>
-        <option value="26">Celebrities</option>
-        <option value="16">Entertainment: Board Games</option>
-        <option value="10">Entertainment: Books</option>
-        <option value="32">Entertainment: Cartoon & Animation</option>
-        <option value="29">Entertainment: Comics</option>
-        <option value="11">Entertainment: Film</option>
-        <option value="31">Entertainment: Japanese Anime & Manga</option>
-        <option value="12">Entertainment: Music</option>
-        <option value="13">Entertainment: Musicals & Theatres</option>
-        <option value="14">Entertainment: Television</option>
-        <option value="15">Entertainment: Video Games</option>
-        <option value="9">General Knowledge</option>
-        <option value="22">Geography</option>
-        <option value="23">History</option>
-        <option value="20">Mythology</option>
-        <option value="24">Politics</option>
-        <option value="17">Science & Nature</option>
-        <option value="18">Science: Computers</option>
-        <option value="30">Science: Gadgets</option>
-        <option value="19">Science: Mathematics</option>
-        <option value="21">Sports</option>
-        <option value="28">Vehicles</option>
-      </select>
-      <button
+      <Dropdown
+        placeholder="Select Category"
+        selection
+        color="violet"
+        options={categories}
+        style={{
+          width: "238.38px",
+          backgroundColor: dark ? "#191632" : "#6435c9",
+          color: dark ? "#aca7c8" : "white",
+          marginTop: "0.5rem",
+          marginBottom: "0.5rem",
+        }}
+      />
+
+      <Button
         onClick={clickStart}
-        className={dark ? "button-normal button-normal-dark" : "button-normal"}
+        color="violet"
+        style={{
+          width: "238.38px",
+          backgroundColor: dark ? "#191632" : "#6435c9",
+          color: dark ? "#aca7c8" : "white",
+        }}
+        size="huge"
+        animated="fade"
       >
-        Start Quiz
-      </button>
+        <Button.Content hidden>Let's do this!</Button.Content>
+        <Button.Content visible>Start Quiz</Button.Content>
+      </Button>
       <span
         className={dark ? "small-text small-text-dark" : "small-text"}
         style={{ zIndex: "1" }}
       >
         Powered by Open Trivia API
         <br />
-        Special thanks to the Scrimba Community
+        Proud supporter of Ukraine&nbsp;
+        <Flag name="ua" />
         <br />
         View on{" "}
         <a
-          href="https://github.com/Rimezin/quizzical"
+          href="https://github.com/Rimezin/quizzical-redux"
           target="_blank"
           rel="noopener noreferrer"
         >

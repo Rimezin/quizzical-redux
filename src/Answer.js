@@ -1,13 +1,13 @@
 import React from "react";
 
 export default function Answer(props) {
-  const { questionId, answer, handleChange, submitted, dark } = props;
+  const { question, answer, handleChange, checked, dark } = props;
 
   // Determine styling for answer //
   function setBackground() {
     let bgColor = "";
 
-    if (!submitted) {
+    if (!checked) {
       // If not submitted, check for dark //
       if (dark) {
         bgColor = answer.isChecked ? "darkslateblue" : "#2d2a4c";
@@ -26,7 +26,7 @@ export default function Answer(props) {
   }
 
   function setColor() {
-    if (submitted) {
+    if (checked) {
       return "black";
     } else if (dark) {
       return "#aca7c8";
@@ -50,14 +50,14 @@ export default function Answer(props) {
 
   let ansClass = `ui huge button answer answer-grey ${
     dark ? "question-answer-dark" : ""
-  } ${submitted ? "disabled" : ""}`;
-
+  }`;
+  // ${checked ? "disabled" : ""}
   return (
     <div className={ansClass} style={answerStyling} onClick={handleClick}>
       <input
         value={answer.answerLabel}
         type="radio"
-        name={questionId}
+        name={question.questionId}
         id={answer.answerId}
         checked={answer.isChecked}
         style={{ display: "none" }}
