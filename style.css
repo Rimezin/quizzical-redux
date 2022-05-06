@@ -31,7 +31,7 @@ h1 {
 }
 
 .dark {
-  color: #aca7c8;
+  color: #aca7c8 !important;
 }
 
 h2 {
@@ -94,6 +94,7 @@ h3 {
   flex-direction: column;
   height: 90vh;
   max-width: 600px;
+  overflow-x: hidden;
 }
 
 .container-condensed {
