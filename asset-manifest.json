@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/quizzical-redux/static/js/main.28c79b93.js",
+    "main.js": "/quizzical-redux/static/js/main.b6ae160d.js",
     "index.html": "/quizzical-redux/index.html",
-    "main.28c79b93.js.map": "/quizzical-redux/static/js/main.28c79b93.js.map"
+    "main.b6ae160d.js.map": "/quizzical-redux/static/js/main.b6ae160d.js.map"
   },
   "entrypoints": [
-    "static/js/main.28c79b93.js"
+    "static/js/main.b6ae160d.js"
   ]
 }
