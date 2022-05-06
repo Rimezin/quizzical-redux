@@ -360,6 +360,8 @@ export default function Splash(props) {
         >
           GitHub
         </a>
+        <br />
+        v2.0
       </span>
     </form>
   );
