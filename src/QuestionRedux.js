@@ -85,9 +85,10 @@ export default function QuestionRedux(props) {
       <Divider />
       <div
         style={{
-          position: "fixed",
+          position: "relative",
           bottom: 0,
           marginBottom: "4rem",
+          height: "63px",
         }}
       >
         <div

@@ -1,6 +1,7 @@
 import React from "react";
 import Quiz from "./Quiz";
 import Splash from "./Splash";
+import AddToHomeScreen from "@ideasio/add-to-homescreen-react";
 
 export default function App() {
   const [startQuiz, setStartQuiz] = React.useState(false);
@@ -28,6 +29,7 @@ export default function App() {
 
   return (
     <div className={dark ? "body body-dark" : "body"}>
+      <AddToHomeScreen appId="quizzical" />
       {!startQuiz && (
         <Splash
           clickStart={clickStart}
