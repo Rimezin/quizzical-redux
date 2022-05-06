@@ -92,7 +92,7 @@ h3 {
 .container-big {
   display: flex;
   flex-direction: column;
-  height: 90vh;
+  max-height: 90vh;
   max-width: 600px;
   overflow-x: hidden;
 }
@@ -135,7 +135,7 @@ h3 {
   min-width: 150px;
   min-height: 50px;
   border-radius: 8px;
-  background-color: darkslateblue;
+  background-color: #483d8b;
   color: white;
   font-weight: 700;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -281,7 +281,7 @@ select:hover {
 
 .question-container {
   overflow-y: auto;
-  max-height: 25rem;
+  max-height: 45vh;
 }
 
 .answer {
