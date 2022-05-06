@@ -199,7 +199,12 @@ export default function Quiz(props) {
 
       {stage === 10 && (
         <div className="container-finish">
-          <Score score={score} />
+          <Score
+            score={score}
+            difficulty={difficulty}
+            category={category}
+            dark={dark}
+          />
           <Button
             color="violet"
             inverted={dark ? true : false}

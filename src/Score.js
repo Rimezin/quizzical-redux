@@ -1,14 +1,26 @@
 import React from "react";
-import Confetti from "./Confetti";
+import Party from "./Confetti";
 
 export default function Score(props) {
-  const { score } = props;
+  const { score, difficulty, category, dark } = props;
 
   return (
     <>
-      {score > 6 && <Confetti />}
-      <div className="score henny">Final Score:</div>
-      <div className="big-score henny">{score}</div>
+      {score > 5 && <Party />}
+      <div className={`score henny ${dark ? "dark" : ""}`}>Final Score:</div>
+      <div className={`big-score henny ${dark ? "dark" : ""}`}>{score}</div>
+      <div
+        style={{ fontSize: "2rem", textTransform: "uppercase" }}
+        className={dark ? "dark" : ""}
+      >
+        {difficulty}
+      </div>
+      <div
+        style={{ fontSize: "1.5rem", margin: "1.5rem" }}
+        className={dark ? "dark" : ""}
+      >
+        {category === null ? { category } : "All Categories"}
+      </div>
     </>
   );
 }

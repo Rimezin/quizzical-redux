@@ -74,7 +74,7 @@ export default function QuestionRedux(props) {
             fontWeight: "600",
             lineHeight: "1",
           }}
-          className={dark ? "h3-dark" : ""}
+          className={dark ? "dark" : ""}
         >
           {question.question}
         </span>
