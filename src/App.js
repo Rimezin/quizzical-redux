@@ -50,6 +50,7 @@ export default function App() {
           chooseCategory={chooseCategory}
           dark={dark}
           handleDark={handleDark}
+          difficulty={difficulty}
         />
       )}
       {startQuiz && (

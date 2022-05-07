@@ -3,8 +3,14 @@ import { Button, ButtonGroup, Dropdown, Flag } from "semantic-ui-react";
 import Toggle from "./Toggle";
 
 export default function Splash(props) {
-  const { clickStart, chooseDifficulty, chooseCategory, dark, handleDark } =
-    props;
+  const {
+    clickStart,
+    chooseDifficulty,
+    chooseCategory,
+    dark,
+    handleDark,
+    difficulty,
+  } = props;
 
   function handleDifficulty(event) {
     event.preventDefault();
@@ -299,6 +305,7 @@ export default function Splash(props) {
           onClick={handleDifficulty}
           value="easy"
           toggle
+          className={difficulty === "easy" ? "" : "alpha"}
         />
         <Button
           color="purple"
@@ -306,6 +313,7 @@ export default function Splash(props) {
           onClick={handleDifficulty}
           value="medium"
           toggle
+          className={difficulty === "medium" ? "" : "alpha"}
         />
         <Button
           color="pink"
@@ -313,6 +321,7 @@ export default function Splash(props) {
           onClick={handleDifficulty}
           value="hard"
           toggle
+          className={difficulty === "hard" ? "" : "alpha"}
         />
       </ButtonGroup>
       <Dropdown
@@ -361,7 +370,7 @@ export default function Splash(props) {
           GitHub
         </a>
         <br />
-        v2.0
+        v2.01
       </span>
     </form>
   );
