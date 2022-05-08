@@ -320,11 +320,18 @@ export default function Splash(props) {
             <li>Most of the code in this project was written by Rimezin</li>
             <li>
               Trivia API is from the{" "}
-              <a href="https://opentdb.com/">Open Trivia Database</a>.
+              <a href="https://opentdb.com/" rel="noreferrer">
+                Open Trivia Database
+              </a>
+              .
             </li>
             <li>
               Special thanks to the&nbsp;
-              <a href="https://scrimba.com/community" target="_blank">
+              <a
+                href="https://scrimba.com/community"
+                target="_blank"
+                rel="noreferrer"
+              >
                 Scrimba Community
               </a>
               &nbsp;for their support, and especially: Vi, Mark, and Ben W. for
@@ -335,6 +342,7 @@ export default function Splash(props) {
               <a
                 href="https://fonts.google.com/share?selection.family=Henny%20Penny%7CJosefin%20Sans"
                 target="_blank"
+                rel="noreferrer"
               >
                 Google Fonts
               </a>
@@ -343,39 +351,55 @@ export default function Splash(props) {
             <li>
               Buttons and some other ui elements are from the React verison
               of&nbsp;
-              <a href="https://react.semantic-ui.com/" target="_blank">
+              <a
+                href="https://react.semantic-ui.com/"
+                target="_blank"
+                rel="noreferrer"
+              >
                 Semantic UI
               </a>
               .
             </li>
             <li>
               The timer countdown was adapted from a Stack Overflow post&nbsp;
-              <a href="https://stackoverflow.com/a/40887181" target="_blank">
+              <a
+                href="https://stackoverflow.com/a/40887181"
+                target="_blank"
+                rel="noreferrer"
+              >
                 found here
               </a>
               .
             </li>
             <li>
               Background music is "Pleasant Porridge" by&nbsp;
-              <a href="https://incompetech.com/music/royalty-free/music.html">
+              <a
+                href="https://incompetech.com/music/royalty-free/music.html"
+                rel="noreferrer"
+              >
                 Kevin MacLeod
               </a>
               . Licensed under&nbsp;
-              <a href="http://creativecommons.org/licenses/by/4.0/">
+              <a
+                href="http://creativecommons.org/licenses/by/4.0/"
+                rel="noreferrer"
+              >
                 Creative Commons: By Attribution 4.0 License
               </a>
             </li>
             <li>
               Various sound effects from&nbsp;
-              <a href="https://mixkit.co/free-sound-effects/">Mixkit</a>, used
-              under their Mixkit Free License
+              <a href="https://mixkit.co/free-sound-effects/" rel="noreferrer">
+                Mixkit
+              </a>
+              , used under their Mixkit Free License
             </li>
           </ol>
           View the source code for Quizzical on&nbsp;
           <a
             href="https://github.com/Rimezin/quizzical-redux"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noreferrer"
           >
             GitHub
           </a>
@@ -568,7 +592,7 @@ export default function Splash(props) {
         <Flag name="ua" />
         <br />
         <br />
-        v3.0
+        v3.01
       </span>
     </form>
   );

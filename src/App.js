@@ -86,6 +86,8 @@ export default function App() {
         case "wrong":
           playWrong();
           break;
+        default:
+          return;
       }
     }
   }

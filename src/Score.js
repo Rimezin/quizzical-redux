@@ -11,7 +11,7 @@ export default function Score(props) {
     } else {
       handleSound("loseGame");
     }
-  }, []);
+  }, [score, handleSound]);
 
   return (
     <>

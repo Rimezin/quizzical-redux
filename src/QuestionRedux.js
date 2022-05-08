@@ -32,6 +32,8 @@ export default function QuestionRedux(props) {
         return 30;
       case "hard":
         return 20;
+      default:
+        return;
     }
   });
 
@@ -85,7 +87,7 @@ export default function QuestionRedux(props) {
       handleCheck(false);
       handleTimeExpire(question.name, question.id);
     }
-  }, [seconds]);
+  }, [seconds, checked, handleCheck, handleTimeExpire]);
 
   // Modal to confirm reset //
   function handleResetClick(e) {
