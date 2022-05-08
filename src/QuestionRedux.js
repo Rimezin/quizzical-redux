@@ -87,7 +87,14 @@ export default function QuestionRedux(props) {
       handleCheck(false);
       handleTimeExpire(question.name, question.id);
     }
-  }, [seconds, checked, handleCheck, handleTimeExpire]);
+  }, [
+    seconds,
+    checked,
+    handleCheck,
+    handleTimeExpire,
+    question.id,
+    question.name,
+  ]);
 
   // Modal to confirm reset //
   function handleResetClick(e) {
