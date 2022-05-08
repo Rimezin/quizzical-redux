@@ -10,12 +10,29 @@ export default function Splash(props) {
     dark,
     handleDark,
     difficulty,
+    installApp,
+    setModal,
+    musicPlaying,
+    handleMusic,
+    handleSound,
+    handleSoundMute,
+    muteSound,
   } = props;
 
+  // Delay music button styling //
+  const [styleDelay, setStyleDelay] = React.useState(false);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setStyleDelay(true);
+    }, 3000);
+  }, []);
+
+  // Handle Difficulty Selection //
   function handleDifficulty(event) {
+    handleSound("click");
     event.preventDefault();
     const diff = event.target.value;
-    console.log(diff);
     chooseDifficulty(diff);
   }
 
@@ -247,13 +264,140 @@ export default function Splash(props) {
     },
   ];
 
+  //// Instructions Modal ////
+  function handleInstructions() {
+    handleSound("button");
+    setModal({
+      show: true,
+      icon: "question circle",
+      title: "How To Play!",
+      content: (
+        <>
+          <b>Welcome to quizzical!</b> The random internet trivia game you never
+          knew you needed! Better think quick, because time keeps ticking and
+          there's more knowledge to gain!
+          <ol>
+            <li>Select your difficulty</li>
+            <li>Choose your category</li>
+            <li>Click "Start Quiz!"</li>
+          </ol>
+          Each question is timed, based on the difficulty you select! Once you
+          have selected your answer, click "Check Answer" to see if you were
+          right!
+          <br />
+          <br />
+          Don't forget you can install this game as a local app on your device!
+        </>
+      ),
+      buttons: {
+        okLabel: "It can't be that hard...",
+        okAction: null,
+        cancelLabel: null,
+        cancelAction: null,
+      },
+    });
+  }
+
+  //// Credits Modal ////
+  function handleCredits() {
+    handleSound("button");
+    setModal({
+      show: true,
+      icon: "bullhorn",
+      title: "Credits",
+      content: (
+        <>
+          This is my final solo project from &nbsp;
+          <a href="https://scrimba.com/learn/learnreact">
+            Bob Ziroll's Intro to React course
+          </a>
+          &nbsp; on Scrimba.com. While I made some design tweaks and added
+          additional functionality to the original design, ultimately the
+          concept for this app is not my own and from that course. Anyone
+          looking to learn React should seriously consider Bob's course, which
+          was free and easy to follow. Otherwise, here's all who went into this:
+          <ol>
+            <li>Most of the code in this project was written by Rimezin</li>
+            <li>
+              Trivia API is from the{" "}
+              <a href="https://opentdb.com/">Open Trivia Database</a>.
+            </li>
+            <li>
+              Special thanks to the&nbsp;
+              <a href="https://scrimba.com/community" target="_blank">
+                Scrimba Community
+              </a>
+              &nbsp;for their support, and especially: Vi, Mark, and Ben W. for
+              their troubleshooting help.
+            </li>
+            <li>
+              The main logo font is called "Henny Penny" from&nbsp;
+              <a
+                href="https://fonts.google.com/share?selection.family=Henny%20Penny%7CJosefin%20Sans"
+                target="_blank"
+              >
+                Google Fonts
+              </a>
+              . Most of the other text on the page is "Josefin Sans."
+            </li>
+            <li>
+              Buttons and some other ui elements are from the React verison
+              of&nbsp;
+              <a href="https://react.semantic-ui.com/" target="_blank">
+                Semantic UI
+              </a>
+              .
+            </li>
+            <li>
+              The timer countdown was adapted from a Stack Overflow post&nbsp;
+              <a href="https://stackoverflow.com/a/40887181" target="_blank">
+                found here
+              </a>
+              .
+            </li>
+            <li>
+              Background music is "Pleasant Porridge" by&nbsp;
+              <a href="https://incompetech.com/music/royalty-free/music.html">
+                Kevin MacLeod
+              </a>
+              . Licensed under&nbsp;
+              <a href="http://creativecommons.org/licenses/by/4.0/">
+                Creative Commons: By Attribution 4.0 License
+              </a>
+            </li>
+            <li>
+              Various sound effects from&nbsp;
+              <a href="https://mixkit.co/free-sound-effects/">Mixkit</a>, used
+              under their Mixkit Free License
+            </li>
+          </ol>
+          View the source code for Quizzical on&nbsp;
+          <a
+            href="https://github.com/Rimezin/quizzical-redux"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+        </>
+      ),
+      buttons: {
+        okLabel: "Sounds good!",
+        okAction: null,
+        cancelLabel: null,
+        cancelAction: null,
+      },
+    });
+  }
+
+  ///////////////////////////////////////////////////
+  /////////// SPLASH RENDERING //////////////////////
+  ///////////////////////////////////////////////////
   return (
     <form
-      className={
-        dark
-          ? "container container-dark container-condensed center"
-          : "container container-condensed center"
-      }
+      className={`quizzical-container quizzical-container-condensed center ${
+        dark ? "quizzical-container-dark" : ""
+      }`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -291,14 +435,44 @@ export default function Splash(props) {
           transform="translate(100 100)"
         />
       </svg>
-      <Toggle dark={dark} handleDark={handleDark} />
+      <ButtonGroup style={{ zIndex: "1" }}>
+        <Toggle dark={dark} handleDark={handleDark} />
+        <Button
+          id="music-button"
+          type="button"
+          onClick={handleMusic}
+          icon={musicPlaying ? "music" : "dont"}
+          color="violet"
+          content="Music"
+          inverted={styleDelay ? true : false}
+          style={{ transition: ".75s" }}
+        />
+        <Button
+          id="music-button"
+          type="button"
+          onClick={handleSoundMute}
+          icon={!muteSound ? "volume up" : "volume off"}
+          color="violet"
+          inverted="true"
+        />
+      </ButtonGroup>
       <br />
 
-      <h1 className={dark ? "dark" : ""}>Quizzical</h1>
-      <span style={dark ? { color: "#aca7c8" } : { color: "#191632" }}>
-        Choose your destiny:
+      <h1 className={dark ? "dark" : ""} style={{ zIndex: "1" }}>
+        Quizzical
+      </h1>
+      <span
+        style={{
+          color: dark ? "#aca7c8" : "#191632",
+          fontWeight: "700",
+          fontSize: "1.2rem",
+          paddingBottom: ".5rem",
+          zIndex: "1",
+        }}
+      >
+        Decide your fate:
       </span>
-      <ButtonGroup>
+      <ButtonGroup style={{ width: "18rem", zIndex: "1" }}>
         <Button
           color="violet"
           content="Easy"
@@ -329,12 +503,14 @@ export default function Splash(props) {
         selection
         color="violet"
         options={categories}
+        onClick={() => handleSound("click")}
         style={{
-          width: "238.38px",
+          width: "18rem",
           backgroundColor: dark ? "#191632" : "#6435c9",
           color: dark ? "#aca7c8" : "white",
           marginTop: "0.5rem",
           marginBottom: "0.5rem",
+          zIndex: "2",
         }}
       />
 
@@ -342,9 +518,11 @@ export default function Splash(props) {
         onClick={clickStart}
         color="violet"
         style={{
-          width: "238.38px",
+          width: "18rem",
           backgroundColor: dark ? "#191632" : "#6435c9",
           color: dark ? "#aca7c8" : "white",
+          margin: "0 0 1rem 0",
+          zIndex: "1",
         }}
         size="huge"
         animated="fade"
@@ -352,25 +530,45 @@ export default function Splash(props) {
         <Button.Content hidden>Let's do this!</Button.Content>
         <Button.Content visible>Start Quiz</Button.Content>
       </Button>
+      <ButtonGroup style={{ width: "18rem", zIndex: "1" }}>
+        <Button
+          color="violet"
+          basic={dark ? true : false}
+          style={{ fontWeight: "700" }}
+          icon="question"
+          inverted
+          type="button"
+          onClick={handleInstructions}
+        />
+        <Button
+          color="blue"
+          basic={dark ? true : false}
+          style={{ fontWeight: "700" }}
+          content="Install App"
+          icon="download"
+          inverted
+          type="button"
+          onClick={installApp}
+        />
+        <Button
+          color="violet"
+          basic={dark ? true : false}
+          style={{ fontWeight: "700" }}
+          icon="bullhorn"
+          inverted
+          type="button"
+          onClick={handleCredits}
+        />
+      </ButtonGroup>
       <span
         className={dark ? "small-text small-text-dark" : "small-text"}
         style={{ zIndex: "1" }}
       >
-        Powered by Open Trivia API
-        <br />
         Proud supporter of Ukraine&nbsp;
         <Flag name="ua" />
         <br />
-        View on{" "}
-        <a
-          href="https://github.com/Rimezin/quizzical-redux"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          GitHub
-        </a>
         <br />
-        v2.01
+        v3.0
       </span>
     </form>
   );

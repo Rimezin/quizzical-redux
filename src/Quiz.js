@@ -3,7 +3,7 @@ import QuestionRedux from "./QuestionRedux";
 import { nanoid } from "nanoid";
 import he from "he";
 import Toggle from "./Toggle";
-import { Button, ButtonGroup, Divider } from "semantic-ui-react";
+import { Button, ButtonGroup } from "semantic-ui-react";
 import Score from "./Score";
 
 export default function Quiz(props) {
@@ -15,9 +15,16 @@ export default function Quiz(props) {
     handleDark,
     setDifficulty,
     setCategory,
+    setModal,
+    handleMusic,
+    musicPlaying,
+    handleSound,
+    handleSoundMute,
+    muteSound,
   } = props;
 
   const [questions, setQuestions] = React.useState([]);
+  // const [questionsValid, setQuestionsValid] = React.useState(false);
   const [submitted, setSubmitted] = React.useState(false);
   const [score, setScore] = React.useState(0);
   const [stage, setStage] = React.useState(0);
@@ -76,6 +83,10 @@ export default function Quiz(props) {
           }))
         )
       );
+    // console.log(questions);
+    // if (questions[0].length() > 1) {
+    //   setQuestionsValid(true);
+    // }
   }, [difficulty, category]);
 
   // Function for setting answers checked, returns new answers object array.
@@ -141,13 +152,42 @@ export default function Quiz(props) {
     );
   }
 
-  function handleReset() {
+  function handleTimeExpire(name, id) {
+    setQuestions((prevQuestions) =>
+      prevQuestions.map((quest) => {
+        let newQuestion = { ...quest };
+        // Set new answers array, pass the id that was checked //
+        newQuestion.answers = setChecked(newQuestion, name, id);
+
+        // If the selected item was in this question in the array, set isAnswered to true.//
+        newQuestion.isAnswered =
+          name === newQuestion.questionId ? true : newQuestion.isAnswered;
+
+        // Figure out if question was answered correctly //
+        newQuestion.isCorrect = false;
+        return newQuestion;
+      })
+    );
+  }
+
+  function handleReset(isModal) {
+    if (isModal) {
+      setModal((modal) => ({
+        ...modal,
+        show: false,
+      }));
+    }
     setDifficulty("easy");
     setCategory("");
     setSubmitted(false);
     setScore(0);
     setStage(0);
     setStartQuiz(false);
+  }
+
+  function handleFinishReset() {
+    handleSound("confirm");
+    handleReset();
   }
 
   const renderQuestions = questions.map((question) => {
@@ -162,15 +202,47 @@ export default function Quiz(props) {
         handleReset={handleReset}
         setStage={setStage}
         setScore={setScore}
+        difficulty={difficulty}
+        handleTimeExpire={handleTimeExpire}
+        setModal={setModal}
+        handleSound={handleSound}
       />
     );
   });
 
   return (
-    <div className={`container ${dark ? "container-dark" : ""} container-big`}>
-      <div style={{ display: "flex" }}>
+    <div
+      className={`quizzical-container ${
+        dark ? "quizzical-container-dark" : ""
+      } quizzical-container-big`}
+    >
+      <div style={{ display: "flex" }} id="header-buttons">
+        <span
+          id="litte-logo"
+          className={`little-logo henny ${dark ? "dark" : ""}`}
+        >
+          Quizzical
+        </span>
         <ButtonGroup style={{ margin: "1rem" }}>
           <Toggle dark={dark} handleDark={handleDark} />
+          <Button
+            id="music-button"
+            type="button"
+            onClick={handleMusic}
+            icon={musicPlaying ? "music" : "dont"}
+            color="violet"
+            inverted={dark ? true : false}
+            style={{ maxWidth: "3rem" }}
+          />
+          <Button
+            id="sounds-button"
+            type="button"
+            onClick={handleSoundMute}
+            icon={!muteSound ? "volume up" : "volume off"}
+            color="violet"
+            inverted={dark ? true : false}
+            style={{ maxWidth: "3rem" }}
+          />
           {stage < 10 && (
             <Button
               color="violet"
@@ -188,30 +260,52 @@ export default function Quiz(props) {
             />
           )}
         </ButtonGroup>
-        <span className={`little-logo henny ${dark ? "dark" : ""}`}>
-          Quizzical
-        </span>
       </div>
-      <Divider />
+      {/* <Divider /> */}
       {stage < 10 && (
         <div id="questions-container">{renderQuestions[stage]}</div>
       )}
+      {/* {!questionsValid && (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <span>
+            Unfortunately, there are no questions in the Open Trivia Database
+            for the category you selected.
+          </span>
+          <Button
+            color="violet"
+            inverted={dark ? true : false}
+            onClick={handleFinishReset}
+            content="New Game"
+            style={{ width: "18rem" }}
+            icon="star"
+            size="huge"
+          />
+        </div>
+      )} */}
 
       {stage === 10 && (
-        <div className="container-finish">
+        <div className="quizzical-container-finish">
           <Score
             score={score}
             difficulty={difficulty}
             category={category}
             dark={dark}
+            handleSound={handleSound}
           />
           <Button
             color="violet"
             inverted={dark ? true : false}
-            onClick={handleReset}
+            onClick={handleFinishReset}
             content="New Game"
-            style={{ width: "10rem" }}
+            style={{ width: "18rem" }}
             icon="star"
+            size="huge"
           />
         </div>
       )}

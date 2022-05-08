@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function Answer(props) {
-  const { question, answer, handleChange, checked, dark } = props;
+  const { question, answer, handleChange, checked, dark, handleSound } = props;
 
   // Determine styling for answer //
   function setBackground() {
@@ -43,6 +43,7 @@ export default function Answer(props) {
 
   // Function to simulate <input> click if user clicks outside of text
   function handleClick() {
+    handleSound("click");
     document.getElementById(answer.answerId).click();
   }
 
@@ -51,7 +52,7 @@ export default function Answer(props) {
   let ansClass = `ui huge button answer answer-grey ${
     dark ? "question-answer-dark" : ""
   }`;
-  // ${checked ? "disabled" : ""}
+
   return (
     <div className={ansClass} style={answerStyling} onClick={handleClick}>
       <input

@@ -8,9 +8,8 @@ export default function Toggle(props) {
     <Button
       basic
       floated="left"
-      // style={{ margin: "10px" }}
+      style={{ maxWidth: "3rem" }}
       color={dark ? "grey" : "violet"}
-      // className="toggle"
       onClick={handleDark}
       icon={dark ? "sun" : "moon"}
     />
