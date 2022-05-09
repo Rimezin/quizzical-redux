@@ -2,7 +2,6 @@ import React from "react";
 import QuestionRedux from "./QuestionRedux";
 import { nanoid } from "nanoid";
 import he from "he";
-import Toggle from "./Toggle";
 import { Button, ButtonGroup } from "semantic-ui-react";
 import Score from "./Score";
 
@@ -12,15 +11,12 @@ export default function Quiz(props) {
     category,
     setStartQuiz,
     dark,
-    handleDark,
     setDifficulty,
     setCategory,
     setModal,
-    handleMusic,
-    musicPlaying,
     handleSound,
-    handleSoundMute,
-    muteSound,
+    handleSettings,
+    settings,
   } = props;
 
   const [questions, setQuestions] = React.useState([]);
@@ -206,6 +202,8 @@ export default function Quiz(props) {
         handleTimeExpire={handleTimeExpire}
         setModal={setModal}
         handleSound={handleSound}
+        settings={settings}
+        handleSettings={handleSettings}
       />
     );
   });
@@ -224,24 +222,14 @@ export default function Quiz(props) {
           Quizzical
         </span>
         <ButtonGroup style={{ margin: "1rem" }}>
-          <Toggle dark={dark} handleDark={handleDark} />
           <Button
-            id="music-button"
-            type="button"
-            onClick={handleMusic}
-            icon={musicPlaying ? "music" : "dont"}
             color="violet"
-            inverted={dark ? true : false}
-            style={{ maxWidth: "3rem" }}
-          />
-          <Button
-            id="sounds-button"
+            basic={dark ? true : false}
+            style={{ fontWeight: "700", maxWidth: "3rem" }}
+            icon="setting"
+            inverted
             type="button"
-            onClick={handleSoundMute}
-            icon={!muteSound ? "volume up" : "volume off"}
-            color="violet"
-            inverted={dark ? true : false}
-            style={{ maxWidth: "3rem" }}
+            onClick={handleSettings}
           />
           {stage < 10 && (
             <Button

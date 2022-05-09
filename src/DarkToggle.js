@@ -6,8 +6,7 @@ export default function Toggle(props) {
 
   return (
     <Button
-      basic
-      floated="left"
+      inverted
       style={{ maxWidth: "3rem" }}
       color={dark ? "grey" : "violet"}
       onClick={handleDark}

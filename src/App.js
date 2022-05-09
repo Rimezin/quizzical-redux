@@ -16,6 +16,9 @@ import losegame from "./sounds/losegame.wav";
 import shutter from "./sounds/shutter.wav";
 import wingame from "./sounds/wingame.wav";
 import wrong from "./sounds/wrong.wav";
+import toggle from "./sounds/toggle.wav";
+
+import { Button, ButtonGroup } from "semantic-ui-react";
 
 // Main Function Start //
 export default function App() {
@@ -36,10 +39,18 @@ export default function App() {
     },
   });
 
+  // Separate state for settings modal //
+  const [settings, setSettings] = React.useState(false);
+
   // Sounds //
-  const [musicPlaying, setMusicPlaying] = React.useState(false);
-  const [playMusic, { pause }] = useSound(pleasantPorridge);
-  const [playClick] = useSound(click);
+  const [musicPlaying, setMusicPlaying] = React.useState(true);
+  const [playMusic, { pause }] = useSound(pleasantPorridge, {
+    // Music props //
+    loop: true,
+    autoplay: true,
+    volume: 0.5,
+  });
+  const [playClick] = useSound(click, { volume: "0.25" });
   const [playButton] = useSound(button);
   const [playButtonNo] = useSound(buttonNo);
   const [playShutter] = useSound(shutter);
@@ -49,6 +60,7 @@ export default function App() {
   const [playLoseGame] = useSound(losegame);
   const [playWinGame] = useSound(wingame);
   const [playWrong] = useSound(wrong);
+  const [playToggle] = useSound(toggle, { volume: "0.20" });
 
   const [muteSound, setMuteSound] = React.useState(false);
 
@@ -86,6 +98,9 @@ export default function App() {
         case "wrong":
           playWrong();
           break;
+        case "toggle":
+          playToggle();
+          break;
         default:
           return;
       }
@@ -95,10 +110,11 @@ export default function App() {
   // Handle Sound muting //
   function handleSoundMute() {
     setMuteSound(!muteSound);
+    handleSound("toggle");
   }
 
   function handleMusic() {
-    handleSound("click");
+    handleSound("toggle");
     setMusicPlaying(!musicPlaying);
     if (!musicPlaying) {
       playMusic();
@@ -106,6 +122,13 @@ export default function App() {
       pause();
     }
   }
+
+  // Simulate Click to start Music //
+  React.useEffect(() => {
+    document.getElementById("quizzical-app").click();
+  });
+
+  //// GAME FUNCTIONS ////
 
   function clickStart(event) {
     event.preventDefault();
@@ -121,59 +144,100 @@ export default function App() {
     setCategory(data.value);
   }
 
-  function handleDark(event) {
-    event.preventDefault();
-    handleSound("shutter");
+  function handleDark() {
+    // event.preventDefault();
+    handleSound("toggle");
     setDark(!dark);
   }
 
-  // APP INSTALLER //
-  let deferredPrompt;
-
-  window.addEventListener("beforeinstallprompt", (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-  });
-
-  async function installApp() {
-    handleSound("click");
-    if (deferredPrompt !== null) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === "accepted") {
-        deferredPrompt = null;
-      }
-    }
+  // Handle Settings //
+  function handleSettings() {
+    handleSound("shutter");
+    setSettings(!settings);
   }
+
+  // APP INSTALLER //
+  // let deferredPrompt;
+
+  // window.addEventListener("beforeinstallprompt", (e) => {
+  //   e.preventDefault();
+  //   deferredPrompt = e;
+  // });
+
+  // async function installApp() {
+  //   handleSound("click");
+  //   if (deferredPrompt !== null && typeof deferredPrompt !== undefined) {
+  //     deferredPrompt.prompt();
+  //     const { outcome } = await deferredPrompt.userChoice;
+  //     if (outcome === "accepted") {
+  //       deferredPrompt = null;
+  //     }
+  //   }
+  // }
 
   /////////////////////////////////////////
   ////////// APP RENDERING ////////////////
   /////////////////////////////////////////
 
   return (
-    <div className={dark ? "body body-dark" : "body"}>
+    <div id="quizzical-app" className={dark ? "body body-dark" : "body"}>
       <Modal
         modal={modal}
         setModal={setModal}
         dark={dark}
         handleSound={handleSound}
       />
+      {/* Top Bar */}
+      <div
+        className={`topBar ${!settings ? "slide" : ""}`}
+        style={{ backgroundColor: dark ? "#35304f" : "#dad8e7" }}
+      >
+        <ButtonGroup>
+          <Button
+            type="button"
+            color={dark ? "grey" : "violet"}
+            onClick={handleDark}
+            icon={dark ? "sun" : "moon"}
+            content={dark ? "Light" : "Dark"}
+            inverted
+          />
+          <Button
+            id="music-button"
+            type="button"
+            onClick={handleMusic}
+            icon={musicPlaying ? "music" : "dont"}
+            color={dark ? "grey" : "violet"}
+            content="Music"
+            inverted="true"
+            style={{ transition: ".75s" }}
+          />
+          <Button
+            id="music-button"
+            type="button"
+            onClick={handleSoundMute}
+            icon={!muteSound ? "volume up" : "volume off"}
+            color={dark ? "grey" : "violet"}
+            inverted="true"
+            content="Sounds"
+          />
+        </ButtonGroup>
+        <br />
+        <div style={{ width: "100%" }} onClick={handleSettings}>
+          <i className="ellipsis horizontal violet inverted icon icon-button"></i>
+        </div>
+      </div>
+
+      {/* Quiz */}
       {!startQuiz && (
         <Splash
           clickStart={clickStart}
           chooseDifficulty={chooseDifficulty}
           chooseCategory={chooseCategory}
           dark={dark}
-          handleDark={handleDark}
           difficulty={difficulty}
-          installApp={installApp}
-          modal={modal}
           setModal={setModal}
-          musicPlaying={musicPlaying}
-          handleMusic={handleMusic}
           handleSound={handleSound}
-          handleSoundMute={handleSoundMute}
-          muteSound={muteSound}
+          handleSettings={handleSettings}
         />
       )}
       {startQuiz && (
@@ -182,15 +246,12 @@ export default function App() {
           category={category}
           setStartQuiz={setStartQuiz}
           dark={dark}
-          handleDark={handleDark}
           setDifficulty={setDifficulty}
           setCategory={setCategory}
           setModal={setModal}
-          musicPlaying={musicPlaying}
-          handleMusic={handleMusic}
           handleSound={handleSound}
-          handleSoundMute={handleSoundMute}
-          muteSound={muteSound}
+          handleSettings={handleSettings}
+          settings={settings}
         />
       )}
     </div>

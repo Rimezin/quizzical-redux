@@ -1,6 +1,15 @@
 import React from "react";
-import { Button, ButtonGroup, Dropdown, Flag } from "semantic-ui-react";
-import Toggle from "./Toggle";
+import {
+  Image,
+  Button,
+  ButtonGroup,
+  Dropdown,
+  Flag,
+  Checkbox,
+  Label,
+} from "semantic-ui-react";
+import installPC from "./pictures/install-pc.png";
+import installMobile from "./pictures/install-mobile.png";
 
 export default function Splash(props) {
   const {
@@ -8,25 +17,11 @@ export default function Splash(props) {
     chooseDifficulty,
     chooseCategory,
     dark,
-    handleDark,
     difficulty,
-    installApp,
     setModal,
-    musicPlaying,
-    handleMusic,
     handleSound,
-    handleSoundMute,
-    muteSound,
+    handleSettings,
   } = props;
-
-  // Delay music button styling //
-  const [styleDelay, setStyleDelay] = React.useState(false);
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      setStyleDelay(true);
-    }, 3000);
-  }, []);
 
   // Handle Difficulty Selection //
   function handleDifficulty(event) {
@@ -414,6 +409,43 @@ export default function Splash(props) {
     });
   }
 
+  //// Install App Modal ////
+  function installApp() {
+    handleSound("button");
+    setModal({
+      show: true,
+      icon: "install",
+      title: "Install on your device",
+      content: (
+        <div>
+          Quizzical is a progressive web app, so you can install it natively on
+          your device!
+          <ul>
+            <li>
+              <b>PC browser:</b>&nbsp;Click the install shortcut in the address
+              bar.
+              <br />
+              <Image src={installPC} />
+            </li>
+            <br />
+            <li>
+              <b>Mobile browser:</b>&nbsp;Tap the three dots&nbsp;
+              <i className="ellipsis vertical" color="black"></i>
+              &nbsp;and then "Install App".
+              <Image src={installMobile} size="medium" />
+            </li>
+          </ul>
+        </div>
+      ),
+      buttons: {
+        okLabel: "Sounds good!",
+        okAction: null,
+        cancelLabel: null,
+        cancelAction: null,
+      },
+    });
+  }
+
   ///////////////////////////////////////////////////
   /////////// SPLASH RENDERING //////////////////////
   ///////////////////////////////////////////////////
@@ -459,28 +491,6 @@ export default function Splash(props) {
           transform="translate(100 100)"
         />
       </svg>
-      <ButtonGroup style={{ zIndex: "1" }}>
-        <Toggle dark={dark} handleDark={handleDark} />
-        <Button
-          id="music-button"
-          type="button"
-          onClick={handleMusic}
-          icon={musicPlaying ? "music" : "dont"}
-          color="violet"
-          content="Music"
-          inverted={styleDelay ? true : false}
-          style={{ transition: ".75s" }}
-        />
-        <Button
-          id="music-button"
-          type="button"
-          onClick={handleSoundMute}
-          icon={!muteSound ? "volume up" : "volume off"}
-          color="violet"
-          inverted="true"
-        />
-      </ButtonGroup>
-      <br />
 
       <h1 className={dark ? "dark" : ""} style={{ zIndex: "1" }}>
         Quizzical
@@ -565,16 +575,6 @@ export default function Splash(props) {
           onClick={handleInstructions}
         />
         <Button
-          color="blue"
-          basic={dark ? true : false}
-          style={{ fontWeight: "700" }}
-          content="Install App"
-          icon="download"
-          inverted
-          type="button"
-          onClick={installApp}
-        />
-        <Button
           color="violet"
           basic={dark ? true : false}
           style={{ fontWeight: "700" }}
@@ -582,6 +582,25 @@ export default function Splash(props) {
           inverted
           type="button"
           onClick={handleCredits}
+        />
+        <Button
+          color="violet"
+          basic={dark ? true : false}
+          style={{ fontWeight: "700" }}
+          icon="setting"
+          inverted
+          type="button"
+          onClick={handleSettings}
+        />
+        <Button
+          color="blue"
+          basic={dark ? true : false}
+          style={{ fontWeight: "700" }}
+          content="Install"
+          icon="download"
+          inverted
+          type="button"
+          onClick={installApp}
         />
       </ButtonGroup>
       <span
@@ -592,7 +611,7 @@ export default function Splash(props) {
         <Flag name="ua" />
         <br />
         <br />
-        v3.03
+        v3.04
       </span>
     </form>
   );

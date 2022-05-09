@@ -17,6 +17,8 @@ export default function QuestionRedux(props) {
     handleTimeExpire,
     setModal,
     handleSound,
+    settings,
+    handleSettings,
   } = props;
 
   const [checked, setChecked] = React.useState(false);
@@ -79,6 +81,9 @@ export default function QuestionRedux(props) {
   function handleNext() {
     setStage((stage) => stage + 1);
     handleSound("click");
+    if (settings) {
+      handleSettings();
+    }
   }
 
   // Watch for time expiration. //
