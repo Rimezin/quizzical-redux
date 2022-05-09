@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/quizzical-redux/static/js/main.0418c057.js",
+    "main.js": "/quizzical-redux/static/js/main.f349b9c7.js",
     "static/js/845.a75aa8bb.chunk.js": "/quizzical-redux/static/js/845.a75aa8bb.chunk.js",
     "static/media/pleasant-porridge.mp3": "/quizzical-redux/static/media/pleasant-porridge.f4fabc7dc6ce56628c69.mp3",
     "static/media/countdown.wav": "/quizzical-redux/static/media/countdown.f89c5fa1380233c226e7.wav",
@@ -17,10 +17,10 @@
     "static/media/shutter.wav": "/quizzical-redux/static/media/shutter.2c46cf73bfc233a828e9.wav",
     "service-worker.js": "/quizzical-redux/service-worker.js",
     "index.html": "/quizzical-redux/index.html",
-    "main.0418c057.js.map": "/quizzical-redux/static/js/main.0418c057.js.map",
+    "main.f349b9c7.js.map": "/quizzical-redux/static/js/main.f349b9c7.js.map",
     "845.a75aa8bb.chunk.js.map": "/quizzical-redux/static/js/845.a75aa8bb.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.0418c057.js"
+    "static/js/main.f349b9c7.js"
   ]
 }
