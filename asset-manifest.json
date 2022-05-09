@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/quizzical-redux/static/js/main.7dfdc77f.js",
+    "main.js": "/quizzical-redux/static/js/main.0418c057.js",
     "static/js/845.a75aa8bb.chunk.js": "/quizzical-redux/static/js/845.a75aa8bb.chunk.js",
     "static/media/pleasant-porridge.mp3": "/quizzical-redux/static/media/pleasant-porridge.f4fabc7dc6ce56628c69.mp3",
     "static/media/countdown.wav": "/quizzical-redux/static/media/countdown.f89c5fa1380233c226e7.wav",
@@ -11,14 +11,16 @@
     "static/media/wingame.wav": "/quizzical-redux/static/media/wingame.48c218e05318d05a829e.wav",
     "static/media/click.wav": "/quizzical-redux/static/media/click.d6575fbd98ae1ecf1662.wav",
     "static/media/button-no.wav": "/quizzical-redux/static/media/button-no.678c6c3fc0f27f3bd438.wav",
-    "static/media/button.wav": "/quizzical-redux/static/media/button.2604a56c761e9cbfc005.wav",
+    "static/media/toggle.wav": "/quizzical-redux/static/media/toggle.1b36d2edfd59606dc2a2.wav",
+    "static/media/install-mobile.png": "/quizzical-redux/static/media/install-mobile.dd6af807c50fa6ef303a.png",
+    "static/media/button.wav": "/quizzical-redux/static/media/button.0ff4ea852b22ca6a0714.wav",
     "static/media/shutter.wav": "/quizzical-redux/static/media/shutter.2c46cf73bfc233a828e9.wav",
     "service-worker.js": "/quizzical-redux/service-worker.js",
     "index.html": "/quizzical-redux/index.html",
-    "main.7dfdc77f.js.map": "/quizzical-redux/static/js/main.7dfdc77f.js.map",
+    "main.0418c057.js.map": "/quizzical-redux/static/js/main.0418c057.js.map",
     "845.a75aa8bb.chunk.js.map": "/quizzical-redux/static/js/845.a75aa8bb.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.7dfdc77f.js"
+    "static/js/main.0418c057.js"
   ]
 }

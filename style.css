@@ -379,3 +379,24 @@ hr {
     height: 90vh;
   }
 }
+
+.topBar {
+  position: fixed;
+  top: 0;
+  width: 50vmax;
+  height: 4rem;
+  border-radius: 0 0 1.5rem 1.5rem;
+  box-shadow: 0 1px 10px black;
+  padding: 0.25rem;
+  text-align: center;
+  z-index: 2;
+}
+
+.slide {
+  transform: translateY(-3rem);
+}
+
+.icon-button {
+  user-select: none;
+  cursor: pointer;
+}
