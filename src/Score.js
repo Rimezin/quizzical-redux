@@ -2,16 +2,7 @@ import React from "react";
 import Party from "./Confetti";
 
 export default function Score(props) {
-  const { score, difficulty, category, dark, handleSound } = props;
-
-  // Handle sounds //
-  React.useEffect(() => {
-    if (score > 5) {
-      handleSound("winGame");
-    } else {
-      handleSound("loseGame");
-    }
-  }, [score, handleSound]);
+  const { score, difficulty, category, dark } = props;
 
   return (
     <>

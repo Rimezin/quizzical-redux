@@ -20,10 +20,10 @@ export default function Quiz(props) {
   } = props;
 
   const [questions, setQuestions] = React.useState([]);
-  // const [questionsValid, setQuestionsValid] = React.useState(false);
-  const [submitted, setSubmitted] = React.useState(false);
+  const [questionsValid, setQuestionsValid] = React.useState(false);
   const [score, setScore] = React.useState(0);
   const [stage, setStage] = React.useState(0);
+  const [finalSound, setFinalSound] = React.useState(false);
 
   // This shuffle array function from coolaj86 on Stack Overflow.
   function shuffle(array) {
@@ -79,11 +79,15 @@ export default function Quiz(props) {
           }))
         )
       );
-    // console.log(questions);
-    // if (questions[0].length() > 1) {
-    //   setQuestionsValid(true);
-    // }
   }, [difficulty, category]);
+
+  // Validate questions //
+  React.useEffect(() => {
+    // console.log("LENGTH: " + questions.length);
+    if (questions.length > 1) {
+      setQuestionsValid(true);
+    }
+  }, [questions]);
 
   // Function for setting answers checked, returns new answers object array.
   /* Params:
@@ -175,7 +179,6 @@ export default function Quiz(props) {
     }
     setDifficulty("easy");
     setCategory("");
-    setSubmitted(false);
     setScore(0);
     setStage(0);
     setStartQuiz(false);
@@ -192,7 +195,6 @@ export default function Quiz(props) {
         key={question.questionId}
         question={question}
         handleChange={handleChange}
-        submitted={submitted}
         dark={dark}
         score={score}
         handleReset={handleReset}
@@ -207,6 +209,18 @@ export default function Quiz(props) {
       />
     );
   });
+
+  // Handle finish sound //
+  React.useEffect(() => {
+    if (stage === 10 && !finalSound) {
+      if (score > 5) {
+        handleSound("winGame");
+      } else {
+        handleSound("loseGame");
+      }
+      setFinalSound(true);
+    }
+  }, [stage, score, handleSound, finalSound]);
 
   return (
     <div
@@ -253,18 +267,37 @@ export default function Quiz(props) {
       {stage < 10 && (
         <div id="questions-container">{renderQuestions[stage]}</div>
       )}
-      {/* {!questionsValid && (
+      {!questionsValid && (
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center",
+            textAlign: "center",
+            alignItems: "center",
           }}
         >
-          <span>
+          <span
+            style={{
+              fontSize: "1.5rem",
+              lineHeight: "1.75rem",
+              padding: "4rem 1.5rem 4rem 1.5rem",
+            }}
+            className={dark ? "dark" : null}
+          >
             Unfortunately, there are no questions in the Open Trivia Database
             for the category you selected.
           </span>
+          <Button
+            color="blue"
+            inverted={dark ? true : false}
+            href="https://opentdb.com/"
+            content="Add Questions"
+            style={{ width: "18rem", marginBottom: ".75rem" }}
+            icon="plus"
+            size="huge"
+            compact
+            type="button"
+          />
           <Button
             color="violet"
             inverted={dark ? true : false}
@@ -273,9 +306,10 @@ export default function Quiz(props) {
             style={{ width: "18rem" }}
             icon="star"
             size="huge"
+            type="button"
           />
         </div>
-      )} */}
+      )}
 
       {stage === 10 && (
         <div className="quizzical-container-finish">
@@ -284,7 +318,6 @@ export default function Quiz(props) {
             difficulty={difficulty}
             category={category}
             dark={dark}
-            handleSound={handleSound}
           />
           <Button
             color="violet"

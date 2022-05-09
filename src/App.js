@@ -53,7 +53,7 @@ export default function App() {
   const [playClick] = useSound(click, { volume: "0.25" });
   const [playButton] = useSound(button);
   const [playButtonNo] = useSound(buttonNo);
-  const [playShutter] = useSound(shutter);
+  const [playShutter] = useSound(shutter, { volume: "0.5" });
   const [playConfirm] = useSound(confirm);
   const [playCorrect] = useSound(correct);
   const [playCountdown] = useSound(countdown);
@@ -222,7 +222,10 @@ export default function App() {
           />
         </ButtonGroup>
         <br />
-        <div style={{ width: "100%" }} onClick={handleSettings}>
+        <div
+          style={{ width: "100%", cursor: "pointer" }}
+          onClick={handleSettings}
+        >
           <i className="ellipsis horizontal violet inverted icon icon-button"></i>
         </div>
       </div>
