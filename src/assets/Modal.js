@@ -80,9 +80,8 @@ export default function Modal(props) {
               content={modal.buttons.cancelLabel}
               color="violet"
               size="large"
-              inverted={dark ? true : false}
+              inverted
               onClick={handleCancelAction}
-              basic
             />
           )}
           {/* Confirm Button */}

@@ -1,15 +1,15 @@
 import React from "react";
-import QuestionRedux from "./QuestionRedux";
+import QuestionRedux from "../assets/Question";
 import { nanoid } from "nanoid";
 import he from "he";
 import { Button, ButtonGroup } from "semantic-ui-react";
-import Score from "./Score";
+import Score from "../assets/Score";
 
 export default function Quiz(props) {
   const {
     difficulty,
     category,
-    setStartQuiz,
+    setPage,
     dark,
     setDifficulty,
     setCategory,
@@ -17,6 +17,7 @@ export default function Quiz(props) {
     handleSound,
     handleSettings,
     settings,
+    prevPage,
   } = props;
 
   const [questions, setQuestions] = React.useState([]);
@@ -181,7 +182,7 @@ export default function Quiz(props) {
     setCategory("");
     setScore(0);
     setStage(0);
-    setStartQuiz(false);
+    setPage(0);
   }
 
   function handleFinishReset() {
@@ -301,10 +302,10 @@ export default function Quiz(props) {
           <Button
             color="violet"
             inverted={dark ? true : false}
-            onClick={handleFinishReset}
-            content="New Game"
+            onClick={prevPage}
+            content="Back"
             style={{ width: "18rem" }}
-            icon="star"
+            icon="left arrow"
             size="huge"
             type="button"
           />

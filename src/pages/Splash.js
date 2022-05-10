@@ -1,263 +1,17 @@
 import React from "react";
-import {
-  Image,
-  Button,
-  ButtonGroup,
-  Dropdown,
-  Flag,
-  Checkbox,
-  Label,
-} from "semantic-ui-react";
-import installPC from "./pictures/install-pc.png";
-import installMobile from "./pictures/install-mobile.png";
+import { Image, Button, ButtonGroup, Flag, Icon } from "semantic-ui-react";
+import installPC from "../pictures/install-pc.png";
+import installMobile from "../pictures/install-mobile.png";
 
 export default function Splash(props) {
   const {
-    clickStart,
-    chooseDifficulty,
-    chooseCategory,
+    // clickStart,
+    nextPage,
     dark,
-    difficulty,
     setModal,
     handleSound,
     handleSettings,
   } = props;
-
-  // Handle Difficulty Selection //
-  function handleDifficulty(event) {
-    handleSound("click");
-    event.preventDefault();
-    const diff = event.target.value;
-    chooseDifficulty(diff);
-  }
-
-  const categories = [
-    {
-      value: "any",
-      icon: "question circle",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "any",
-      text: "Any Category",
-    },
-    {
-      value: "27",
-      icon: "sticker mule",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "27",
-      text: "Animals",
-    },
-    {
-      value: "25",
-      icon: "paint brush",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "25",
-      text: "Art",
-    },
-    {
-      value: "26",
-      icon: "star",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "26",
-      text: "Celebrities",
-    },
-    {
-      value: "16",
-      icon: "chess",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "16",
-      text: "Entertainment: Board Games",
-    },
-    {
-      value: "10",
-      icon: "book",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "10",
-      text: "Entertainment: Books",
-    },
-    {
-      value: "32",
-      icon: "smile",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "32",
-      text: "Entertainment: Cartoon & Animation",
-    },
-    {
-      value: "29",
-      icon: "newspaper",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "29",
-      text: "Entertainment: Comics",
-    },
-    {
-      value: "11",
-      icon: "film",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "11",
-      text: "Entertainment: Film",
-    },
-    {
-      value: "31",
-      icon: "certificate",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "31",
-      text: "Entertainment: Japanese Anime & Manga",
-    },
-    {
-      value: "12",
-      icon: "music",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "12",
-      text: "Entertainment: Music",
-    },
-    {
-      value: "13",
-      icon: "podcast",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "13",
-      text: "Entertainment: Musicals & Theatres",
-    },
-    {
-      value: "14",
-      icon: "tv",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "14",
-      text: "Entertainment: Television",
-    },
-    {
-      value: "15",
-      icon: "gamepad",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "15",
-      text: "Entertainment: Video Games",
-    },
-    {
-      value: "9",
-      icon: "cloud",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "9",
-      text: "General Knowledge",
-    },
-    {
-      value: "22",
-      icon: "tree",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "22",
-      text: "Geography",
-    },
-    {
-      value: "23",
-      icon: "globe",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "23",
-      text: "History",
-    },
-    {
-      value: "20",
-      icon: "bug",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "20",
-      text: "Mythology",
-    },
-    {
-      value: "24",
-      icon: "bullhorn",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "24",
-      text: "Politics",
-    },
-    {
-      value: "17",
-      icon: "rocket",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "17",
-      text: "Science & Nature",
-    },
-    {
-      value: "18",
-      icon: "laptop",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "18",
-      text: "Science: Computers",
-    },
-    {
-      value: "30",
-      icon: "headphones",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "30",
-      text: "Science: Gadgets",
-    },
-    {
-      value: "19",
-      icon: "calculator",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "19",
-      text: "Science: Mathematics",
-    },
-    {
-      value: "21",
-      icon: "football ball",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "21",
-      text: "Sports",
-    },
-    {
-      value: "28",
-      icon: "truck",
-      onClick: (e, d) => {
-        chooseCategory(e, d);
-      },
-      key: "28",
-      text: "Vehicles",
-    },
-  ];
 
   //// Instructions Modal ////
   function handleInstructions() {
@@ -272,9 +26,10 @@ export default function Splash(props) {
           knew you needed! Better think quick, because time keeps ticking and
           there's more knowledge to gain!
           <ol>
+            <li>Click Start Game</li>
             <li>Select your difficulty</li>
             <li>Choose your category</li>
-            <li>Click "Start Quiz!"</li>
+            <li>Click "Start!"</li>
           </ol>
           Each question is timed, based on the difficulty you select! Once you
           have selected your answer, click "Check Answer" to see if you were
@@ -430,7 +185,7 @@ export default function Splash(props) {
             <br />
             <li>
               <b>Mobile browser:</b>&nbsp;Tap the three dots&nbsp;
-              <i className="ellipsis vertical" color="black"></i>
+              <Icon name="ellipsis vertical" />
               &nbsp;and then "Install App".
               <Image src={installMobile} size="medium" />
             </li>
@@ -495,61 +250,8 @@ export default function Splash(props) {
       <h1 className={dark ? "dark" : ""} style={{ zIndex: "1" }}>
         Quizzical
       </h1>
-      <span
-        style={{
-          color: dark ? "#aca7c8" : "#191632",
-          fontWeight: "700",
-          fontSize: "1.2rem",
-          paddingBottom: ".5rem",
-          zIndex: "1",
-        }}
-      >
-        Decide your fate:
-      </span>
-      <ButtonGroup style={{ width: "18rem", zIndex: "1" }}>
-        <Button
-          color="violet"
-          content="Easy"
-          onClick={handleDifficulty}
-          value="easy"
-          toggle
-          className={difficulty === "easy" ? "" : "alpha"}
-        />
-        <Button
-          color="purple"
-          content="Medium"
-          onClick={handleDifficulty}
-          value="medium"
-          toggle
-          className={difficulty === "medium" ? "" : "alpha"}
-        />
-        <Button
-          color="pink"
-          content="Hard"
-          onClick={handleDifficulty}
-          value="hard"
-          toggle
-          className={difficulty === "hard" ? "" : "alpha"}
-        />
-      </ButtonGroup>
-      <Dropdown
-        placeholder="Select Category"
-        selection
-        color="violet"
-        options={categories}
-        onClick={() => handleSound("click")}
-        style={{
-          width: "18rem",
-          backgroundColor: dark ? "#191632" : "#6435c9",
-          color: dark ? "#aca7c8" : "white",
-          marginTop: "0.5rem",
-          marginBottom: "0.5rem",
-          zIndex: "2",
-        }}
-      />
-
       <Button
-        onClick={clickStart}
+        onClick={nextPage}
         color="violet"
         style={{
           width: "18rem",
@@ -561,8 +263,8 @@ export default function Splash(props) {
         size="huge"
         animated="fade"
       >
-        <Button.Content hidden>Let's do this!</Button.Content>
-        <Button.Content visible>Start Quiz</Button.Content>
+        <Button.Content hidden>Let's get quizzical!</Button.Content>
+        <Button.Content visible>Start Game</Button.Content>
       </Button>
       <ButtonGroup style={{ width: "18rem", zIndex: "1" }}>
         <Button
@@ -611,7 +313,7 @@ export default function Splash(props) {
         <Flag name="ua" />
         <br />
         <br />
-        v3.05
+        v4.0
       </span>
     </form>
   );

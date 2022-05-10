@@ -31,9 +31,9 @@ export default function QuestionRedux(props) {
       case "easy":
         return 40;
       case "medium":
-        return 30;
+        return 35;
       case "hard":
-        return 20;
+        return 30;
       default:
         return;
     }

@@ -1,7 +1,13 @@
+//// Main Quizzical App ////
+// Created by Rimezin 2022 //
+
 import React from "react";
-import Modal from "./Modal";
-import Quiz from "./Quiz";
-import Splash from "./Splash";
+
+// Assets //
+import Modal from "./assets/Modal";
+
+// Custom Hooks //
+import useStickyState from "./hooks/useStickyState";
 
 // Sounds //
 import useSound from "use-sound";
@@ -18,51 +24,69 @@ import wingame from "./sounds/wingame.wav";
 import wrong from "./sounds/wrong.wav";
 import toggle from "./sounds/toggle.wav";
 
+// Pages //
+import Quiz from "./pages/Quiz";
+import Splash from "./pages/Splash";
+import Category from "./pages/Category";
+import Difficulty from "./pages/Difficulty";
+
 import { Button, ButtonGroup } from "semantic-ui-react";
 
 // Main Function Start //
 export default function App() {
-  const [startQuiz, setStartQuiz] = React.useState(false);
-  const [difficulty, setDifficulty] = React.useState("easy");
-  const [category, setCategory] = React.useState("");
-  const [dark, setDark] = React.useState(false);
-  const [modal, setModal] = React.useState({
-    show: false,
-    icon: "question circle",
-    title: "Modal Title",
-    content: "Some words",
-    buttons: {
-      okLabel: "Sounds good!",
-      okAction: null,
-      cancelLabel: null,
-      cancelAction: null,
-    },
-  });
+  ///////////////////
+  //// Dark Mode ////
+  const [dark, setDark] = useStickyState(false, "quizzical-dark");
+  function handleDark() {
+    handleSound("toggle");
+    setDark(!dark);
+  }
 
-  // Separate state for settings modal //
-  const [settings, setSettings] = React.useState(false);
-
-  // Sounds //
-  const [musicPlaying, setMusicPlaying] = React.useState(true);
+  ///////////////
+  //// Music ////
+  const [musicPlaying, setMusicPlaying] = useStickyState(
+    true,
+    "quizzical-musicPlaying"
+  );
   const [playMusic, { pause }] = useSound(pleasantPorridge, {
-    // Music props //
     loop: true,
-    autoplay: true,
+    autoplay: musicPlaying,
     volume: 0.5,
   });
+
+  function handleMusic() {
+    handleSound("toggle");
+    setMusicPlaying(!musicPlaying);
+    if (!musicPlaying) {
+      playMusic();
+    } else {
+      pause();
+    }
+  }
+
+  // Simulate Click to start Music //
+  React.useEffect(() => {
+    document.getElementById("quizzical-app").click();
+  });
+
+  ////////////////
+  //// Sounds ////
   const [playClick] = useSound(click, { volume: "0.25" });
-  const [playButton] = useSound(button);
-  const [playButtonNo] = useSound(buttonNo);
+  const [playButton] = useSound(button, { volume: "0.5" });
+  const [playButtonNo] = useSound(buttonNo, { volume: "0.5" });
   const [playShutter] = useSound(shutter, { volume: "0.5" });
   const [playConfirm] = useSound(confirm);
-  const [playCorrect] = useSound(correct);
+  const [playCorrect] = useSound(correct, { volume: "0.5" });
   const [playCountdown] = useSound(countdown);
-  const [playLoseGame] = useSound(losegame);
-  const [playWinGame] = useSound(wingame);
-  const [playWrong] = useSound(wrong);
+  const [playLoseGame] = useSound(losegame, { volume: "0.5" });
+  const [playWinGame] = useSound(wingame, { volume: "0.5" });
+  const [playWrong] = useSound(wrong, { volume: "0.5" });
   const [playToggle] = useSound(toggle, { volume: "0.20" });
 
-  const [muteSound, setMuteSound] = React.useState(false);
+  const [muteSound, setMuteSound] = useStickyState(
+    false,
+    "quizzical-muteSound"
+  );
 
   // Switch Function to play sounds //
   function handleSound(sound) {
@@ -113,67 +137,60 @@ export default function App() {
     handleSound("toggle");
   }
 
-  function handleMusic() {
-    handleSound("toggle");
-    setMusicPlaying(!musicPlaying);
-    if (!musicPlaying) {
-      playMusic();
-    } else {
-      pause();
-    }
-  }
-
-  // Simulate Click to start Music //
-  React.useEffect(() => {
-    document.getElementById("quizzical-app").click();
+  /////////////////////////
+  //// State for modal ////
+  const [modal, setModal] = React.useState({
+    show: false,
+    icon: "question circle",
+    title: "Modal Title",
+    content: "Some words",
+    buttons: {
+      okLabel: "Sounds good!",
+      okAction: null,
+      cancelLabel: null,
+      cancelAction: null,
+    },
   });
 
-  //// GAME FUNCTIONS ////
-
-  function clickStart(event) {
-    event.preventDefault();
-    handleSound("button");
-    setStartQuiz((startQuiz) => !startQuiz);
-  }
-
-  function chooseDifficulty(value) {
-    setDifficulty(value.toLowerCase());
-  }
-  function chooseCategory(e, data) {
-    handleSound("click");
-    setCategory(data.value);
-  }
-
-  function handleDark() {
-    // event.preventDefault();
-    handleSound("toggle");
-    setDark(!dark);
-  }
-
-  // Handle Settings //
+  // Separate state for settings modal //
+  const [settings, setSettings] = React.useState(false);
   function handleSettings() {
     handleSound("shutter");
     setSettings(!settings);
   }
 
-  // APP INSTALLER //
-  // let deferredPrompt;
+  /////////////////////////////////
+  //// GAME STATES & FUNCTIONS ////
+  // Pages //
+  const [page, setPage] = React.useState(0);
+  /**
+   * 0 - Splash
+   * 1 - Difficulty
+   * 2 - Category
+   * 3 - Quiz
+   */
 
-  // window.addEventListener("beforeinstallprompt", (e) => {
-  //   e.preventDefault();
-  //   deferredPrompt = e;
-  // });
+  function nextPage(event) {
+    event.preventDefault();
+    handleSound("button");
+    setPage((page) => page + 1);
+  }
+  function prevPage(event) {
+    event.preventDefault();
+    handleSound("button");
+    setPage((page) => page - 1);
+  }
 
-  // async function installApp() {
-  //   handleSound("click");
-  //   if (deferredPrompt !== null && typeof deferredPrompt !== undefined) {
-  //     deferredPrompt.prompt();
-  //     const { outcome } = await deferredPrompt.userChoice;
-  //     if (outcome === "accepted") {
-  //       deferredPrompt = null;
-  //     }
-  //   }
-  // }
+  // Difficulty & Category //
+  const [difficulty, setDifficulty] = React.useState("easy");
+  const [category, setCategory] = React.useState("");
+
+  function chooseDifficulty(value) {
+    setDifficulty(value.toLowerCase());
+  }
+  function chooseCategory(value) {
+    setCategory(value);
+  }
 
   /////////////////////////////////////////
   ////////// APP RENDERING ////////////////
@@ -208,7 +225,7 @@ export default function App() {
             icon={musicPlaying ? "music" : "dont"}
             color={dark ? "grey" : "violet"}
             content="Music"
-            inverted="true"
+            inverted={true}
             style={{ transition: ".75s" }}
           />
           <Button
@@ -217,7 +234,7 @@ export default function App() {
             onClick={handleSoundMute}
             icon={!muteSound ? "volume up" : "volume off"}
             color={dark ? "grey" : "violet"}
-            inverted="true"
+            inverted={true}
             content="Sounds"
           />
         </ButtonGroup>
@@ -230,31 +247,66 @@ export default function App() {
         </div>
       </div>
 
-      {/* Quiz */}
-      {!startQuiz && (
+      {/* Splash - Page 0 */}
+      {page === 0 && (
         <Splash
-          clickStart={clickStart}
-          chooseDifficulty={chooseDifficulty}
-          chooseCategory={chooseCategory}
+          // clickStart={clickStart}
+          nextPage={nextPage}
+          prevPage={prevPage}
           dark={dark}
-          difficulty={difficulty}
           setModal={setModal}
           handleSound={handleSound}
           handleSettings={handleSettings}
         />
       )}
-      {startQuiz && (
-        <Quiz
-          difficulty={difficulty}
-          category={category}
-          setStartQuiz={setStartQuiz}
+
+      {/* Difficulty - Page 1 */}
+      {page === 1 && (
+        <Difficulty
+          nextPage={nextPage}
+          prevPage={prevPage}
           dark={dark}
-          setDifficulty={setDifficulty}
-          setCategory={setCategory}
           setModal={setModal}
           handleSound={handleSound}
           handleSettings={handleSettings}
+          //
+          difficulty={difficulty}
+          chooseDifficulty={chooseDifficulty}
+        />
+      )}
+
+      {/* Category - Page 2 */}
+      {page === 2 && (
+        <Category
+          nextPage={nextPage}
+          prevPage={prevPage}
+          dark={dark}
+          setModal={setModal}
+          handleSound={handleSound}
+          handleSettings={handleSettings}
+          //
+          category={category}
+          chooseCategory={chooseCategory}
+        />
+      )}
+
+      {/* Quiz - Page 3 */}
+      {page === 3 && (
+        <Quiz
+          // setStartQuiz={setStartQuiz}
+          prevPage={prevPage}
+          setPage={setPage}
+          dark={dark}
+          setModal={setModal}
+          handleSound={handleSound}
           settings={settings}
+          handleSettings={handleSettings}
+          //
+          difficulty={difficulty}
+          setDifficulty={setDifficulty}
+          //
+          category={category}
+          setCategory={setCategory}
         />
       )}
     </div>
