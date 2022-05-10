@@ -67,6 +67,8 @@ export default function App() {
   // Simulate Click to start Music //
   React.useEffect(() => {
     document.getElementById("quizzical-app").click();
+
+    console.log(process.env.REACT_APP_API_KEY);
   });
 
   ////////////////
