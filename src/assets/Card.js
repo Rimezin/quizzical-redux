@@ -22,7 +22,7 @@ export default function Card(props) {
         name={icon}
         style={{
           fontSize: "3rem",
-          paddingTop: "1.5rem",
+          margin: "auto auto 0rem auto",
         }}
         className={`${category === value ? "icon-selected" : ""} ${
           dark ? "dark-icon" : null
