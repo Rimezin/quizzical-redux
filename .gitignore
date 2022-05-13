@@ -5,8 +5,11 @@
 /.pnp
 .pnp.js
 
-# env files
+# api test
 .env
+
+# Google API Service Worker Credentials
+# credentials.json
 
 # testing
 /coverage

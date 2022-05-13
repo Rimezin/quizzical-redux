@@ -11,6 +11,7 @@ export default function Splash(props) {
     setModal,
     handleSound,
     handleSettings,
+    handleScoreboard,
   } = props;
 
   //// Instructions Modal ////
@@ -305,6 +306,18 @@ export default function Splash(props) {
           onClick={installApp}
         />
       </ButtonGroup>
+      <Button
+        color="purple"
+        inverted
+        onClick={() => handleScoreboard(true, 0, false)}
+        content="Scoreboard"
+        style={{
+          width: "18rem",
+          margin: "1rem 0 1rem 0",
+          zIndex: "1",
+        }}
+        icon="users"
+      />
       <span
         className={dark ? "small-text small-text-dark" : "small-text"}
         style={{ zIndex: "1" }}
@@ -313,7 +326,7 @@ export default function Splash(props) {
         <Flag name="ua" />
         <br />
         <br />
-        v4.01
+        v4.1
       </span>
     </form>
   );

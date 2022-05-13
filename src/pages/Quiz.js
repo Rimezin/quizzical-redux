@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 import he from "he";
 import { Button, ButtonGroup } from "semantic-ui-react";
 import Score from "../assets/Score";
+import Scoreboard from "./Scoreboard";
 
 export default function Quiz(props) {
   const {
@@ -18,6 +19,7 @@ export default function Quiz(props) {
     handleSettings,
     settings,
     prevPage,
+    handleScoreboard,
   } = props;
 
   const [questions, setQuestions] = React.useState([]);
@@ -183,6 +185,7 @@ export default function Quiz(props) {
     setScore(0);
     setStage(0);
     setPage(0);
+    handleScoreboard(false);
   }
 
   function handleFinishReset() {
@@ -327,6 +330,15 @@ export default function Quiz(props) {
             content="New Game"
             style={{ width: "18rem" }}
             icon="star"
+            size="huge"
+          />
+          <Button
+            color="purple"
+            inverted={dark ? true : false}
+            onClick={() => handleScoreboard(true, score, true)}
+            content="Scoreboard"
+            style={{ width: "18rem" }}
+            icon="users"
             size="huge"
           />
         </div>

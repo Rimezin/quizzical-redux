@@ -31,6 +31,7 @@ import Category from "./pages/Category";
 import Difficulty from "./pages/Difficulty";
 
 import { Button, ButtonGroup } from "semantic-ui-react";
+import Scoreboard from "./pages/Scoreboard";
 
 // Main Function Start //
 export default function App() {
@@ -67,8 +68,6 @@ export default function App() {
   // Simulate Click to start Music //
   React.useEffect(() => {
     document.getElementById("quizzical-app").click();
-
-    console.log(process.env.REACT_APP_API_KEY);
   });
 
   ////////////////
@@ -170,6 +169,7 @@ export default function App() {
    * 1 - Difficulty
    * 2 - Category
    * 3 - Quiz
+   * 4 - Scoreboard
    */
 
   function nextPage(event) {
@@ -192,6 +192,30 @@ export default function App() {
   }
   function chooseCategory(value) {
     setCategory(value);
+  }
+
+  //// Scoreboard ////
+  const [scoreboard, setScoreboard] = React.useState({
+    postable: false,
+    score: 0,
+  });
+
+  function handleScoreboard(show, score, postable) {
+    handleSound("button");
+    if (show) {
+      setPage(4);
+    } else {
+      setDifficulty("easy");
+      setCategory("");
+      setPage(0);
+    }
+    setScoreboard((scoreboard) => ({
+      score: score !== null || score !== undefined ? score : scoreboard.score,
+      postable:
+        postable !== null || postable !== undefined
+          ? postable
+          : scoreboard.postable,
+    }));
   }
 
   /////////////////////////////////////////
@@ -259,6 +283,7 @@ export default function App() {
           setModal={setModal}
           handleSound={handleSound}
           handleSettings={handleSettings}
+          handleScoreboard={handleScoreboard}
         />
       )}
 
@@ -309,6 +334,19 @@ export default function App() {
           //
           category={category}
           setCategory={setCategory}
+          //
+          scoreboard={scoreboard}
+          handleScoreboard={handleScoreboard}
+        />
+      )}
+      {/* Scoreboard */}
+      {page === 4 && (
+        <Scoreboard
+          scoreboard={scoreboard}
+          handleScoreboard={handleScoreboard}
+          dark={dark}
+          handleSettings={handleSettings}
+          handleSound={handleSound}
         />
       )}
     </div>
