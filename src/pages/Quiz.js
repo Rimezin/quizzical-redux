@@ -4,7 +4,6 @@ import { nanoid } from "nanoid";
 import he from "he";
 import { Button, ButtonGroup } from "semantic-ui-react";
 import Score from "../assets/Score";
-import Scoreboard from "./Scoreboard";
 
 export default function Quiz(props) {
   const {

@@ -17,13 +17,13 @@ export default function Scoreboard(props) {
   });
 
   // Determine Date //
-  const [date, setDate] = React.useState(() => {
+  const date = () => {
     let date = new Date();
     date = `${
       date.getUTCMonth() + 1
     }/${date.getUTCDate()}/${date.getUTCFullYear()} - ${date.getUTCHours()}:${date.getUTCMinutes()} (UTC)`;
     return date;
-  });
+  };
 
   // Handle Form Data //
   const [formData, setFormData] = React.useState({
