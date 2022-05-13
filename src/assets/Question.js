@@ -54,6 +54,46 @@ export default function QuestionRedux(props) {
     );
   });
 
+  function decideScore() {
+    let questionScore = 0;
+    switch (difficulty) {
+      case "easy":
+        if (seconds > 30) {
+          questionScore += 5;
+        } else if (seconds > 20) {
+          questionScore += 3;
+        } else if (seconds > 10) {
+          questionScore += 1;
+        }
+        questionScore += 1;
+        break;
+      case "medium":
+        if (seconds > 25) {
+          questionScore += 5;
+        } else if (seconds > 15) {
+          questionScore += 3;
+        } else if (seconds > 5) {
+          questionScore += 1;
+        }
+        questionScore += 3;
+        break;
+      case "hard":
+        if (seconds > 20) {
+          questionScore += 5;
+        } else if (seconds > 12) {
+          questionScore += 3;
+        } else if (seconds > 3) {
+          questionScore += 1;
+        }
+        questionScore += 5;
+        break;
+      default:
+        break;
+    }
+
+    return questionScore;
+  }
+
   function handleCheck(validate) {
     // Check answer //
     if (validate === null || validate === undefined || validate === "") {
@@ -69,12 +109,12 @@ export default function QuestionRedux(props) {
     setChecked(true);
     setError(false);
     if (question.isCorrect) {
-      setScore((score) => score + 1);
+      setScore((score) => score + decideScore());
       handleSound("correct");
-      setResult("Correct!");
+      setResult(`Correct! +${decideScore()}`);
     } else {
       handleSound("wrong");
-      setResult("Wrong...");
+      setResult("Wrong... +0");
     }
   }
 
@@ -175,7 +215,11 @@ export default function QuestionRedux(props) {
             opacity: error || result ? "100%" : "0%",
             justifyContent: "center",
             margin: "1rem",
-            color: error ? "red" : result === "Correct!" ? "limegreen" : "red",
+            color: error
+              ? "red"
+              : result === "Wrong... +0"
+              ? "red"
+              : "limegreen",
             fontWeight: error ? null : 700,
           }}
         >
@@ -184,9 +228,7 @@ export default function QuestionRedux(props) {
             color="violet"
             raised
             inverted={dark ? true : false}
-          >{`${error ? error : ""}${
-            result ? `${result} - Score: ${score}` : ""
-          }`}</Segment>
+          >{`${error ? error : ""}${result ? `${result}` : ""}`}</Segment>
         </div>
 
         <div className="question-buttons">

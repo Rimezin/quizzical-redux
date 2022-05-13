@@ -198,6 +198,7 @@ export default function App() {
   const [scoreboard, setScoreboard] = React.useState({
     postable: false,
     score: 0,
+    difficulty: difficulty,
   });
 
   function handleScoreboard(show, score, postable) {

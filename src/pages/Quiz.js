@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 import he from "he";
 import { Button, ButtonGroup } from "semantic-ui-react";
 import Score from "../assets/Score";
+import AnswerKey from "./AnswerKey";
 
 export default function Quiz(props) {
   const {
@@ -213,10 +214,20 @@ export default function Quiz(props) {
     );
   });
 
+  function goodGame() {
+    if (difficulty === "easy") {
+      return score > 30 ? true : false;
+    } else if (difficulty === "medium") {
+      return score > 40 ? true : false;
+    } else if (difficulty === "hard") {
+      return score > 50 ? true : false;
+    }
+  }
+
   // Handle finish sound //
   React.useEffect(() => {
     if (stage === 10 && !finalSound) {
-      if (score > 5) {
+      if (goodGame()) {
         handleSound("winGame");
       } else {
         handleSound("loseGame");
@@ -224,6 +235,15 @@ export default function Quiz(props) {
       setFinalSound(true);
     }
   }, [stage, score, handleSound, finalSound]);
+
+  function handleBack() {
+    handleSound("button");
+    setStage(10);
+  }
+  function handleAnswerKey() {
+    handleSound("button");
+    setStage(11);
+  }
 
   return (
     <div
@@ -251,7 +271,7 @@ export default function Quiz(props) {
           {stage < 10 && (
             <Button
               color="violet"
-              content={`Score: ${score} of ${stage + 1}`}
+              content={`Score: ${score} | #${stage + 1} of 10`}
               inverted={dark ? true : false}
               disabled
             />
@@ -262,6 +282,15 @@ export default function Quiz(props) {
               inverted={dark ? true : false}
               content={difficulty}
               disabled
+            />
+          )}
+          {stage === 11 && (
+            <Button
+              content="Back"
+              color="violet"
+              icon="left arrow"
+              inverted={dark ? true : false}
+              onClick={handleBack}
             />
           )}
         </ButtonGroup>
@@ -321,13 +350,23 @@ export default function Quiz(props) {
             difficulty={difficulty}
             category={category}
             dark={dark}
+            goodGame={goodGame()}
+          />
+          <Button
+            color="violet"
+            inverted={dark ? true : false}
+            onClick={handleAnswerKey}
+            content="See Answers"
+            style={{ width: "18rem" }}
+            icon="question circle"
+            size="huge"
           />
           <Button
             color="violet"
             inverted={dark ? true : false}
             onClick={handleFinishReset}
             content="New Game"
-            style={{ width: "18rem" }}
+            style={{ width: "18rem", marginTop: ".5rem" }}
             icon="star"
             size="huge"
           />
@@ -336,12 +375,13 @@ export default function Quiz(props) {
             inverted={dark ? true : false}
             onClick={() => handleScoreboard(true, score, true)}
             content="Scoreboard"
-            style={{ width: "18rem" }}
+            style={{ width: "18rem", marginTop: ".5rem" }}
             icon="users"
             size="huge"
           />
         </div>
       )}
+      {stage === 11 && <AnswerKey questions={questions} dark={dark} />}
     </div>
   );
 }

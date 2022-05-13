@@ -326,7 +326,7 @@ export default function Splash(props) {
         <Flag name="ua" />
         <br />
         <br />
-        v4.11
+        v4.2
       </span>
     </form>
   );

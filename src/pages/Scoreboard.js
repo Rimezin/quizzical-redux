@@ -1,8 +1,6 @@
 import axios from "axios";
 import React from "react";
-// import { google, GoogleApis } from "googleapis";
 import { ButtonGroup, Button, Form } from "semantic-ui-react";
-// import { auth } from "google-auth-library";
 import useGoogleSheets from "use-google-sheets";
 
 export default function Scoreboard(props) {
@@ -30,6 +28,7 @@ export default function Scoreboard(props) {
     name: "",
     score: scoreboard.score,
     date: date,
+    difficulty: scoreboard.difficulty,
   });
 
   function handleChange(event) {
@@ -75,9 +74,10 @@ export default function Scoreboard(props) {
       return (
         <li
           key={sortedData.indexOf(scoreItem)}
-          className={`score-item ${dark ? "bg-dark dark" : null}`}
+          className={`score-item ${dark ? "bg-dark dark" : "bg-light"}`}
         >
-          {scoreItem.name} - {scoreItem.score} - {scoreItem.date}
+          {scoreItem.name} - {scoreItem.score} - {scoreItem.difficulty} -{" "}
+          {scoreItem.date}
         </li>
       );
     });
@@ -112,6 +112,22 @@ export default function Scoreboard(props) {
             type="button"
             onClick={handleSettings}
           />
+          {/* {scoreboard.postable && (
+            <Button
+              content="Back"
+              color="purple"
+              icon="left arrow"
+              inverted={dark ? true : false}
+              onClick={handleBack()}
+            />
+          )} */}
+          <Button
+            content={scoreboard.postable ? "New Game" : "Back"}
+            color="violet"
+            icon={scoreboard.postable ? "star" : "left arrow"}
+            inverted={dark ? true : false}
+            onClick={() => handleScoreboard(false)}
+          />
           <Button
             type="button"
             content="Refresh Scores"
@@ -119,13 +135,6 @@ export default function Scoreboard(props) {
             icon="cloud download"
             inverted={dark ? true : false}
             onClick={handleRefetch}
-          />
-          <Button
-            content="New Game"
-            color="violet"
-            icon="star"
-            inverted={dark ? true : false}
-            onClick={() => handleScoreboard(false)}
           />
         </ButtonGroup>
       </div>
@@ -136,7 +145,9 @@ export default function Scoreboard(props) {
           className={`post-score ${disable ? "disabled" : null}`}
           style={{ maxWidth: "fit-content" }}
         >
-          <h3 className={dark ? "dark" : null}>Score: {scoreboard.score}</h3>
+          <h3 className={dark ? "dark" : null}>
+            Score: {scoreboard.score} {scoreboard.difficulty}
+          </h3>
           <h4 className={dark ? "dark" : null}>Date: {date}</h4>
           <Form.Field>
             <label className={dark ? "dark" : null}>Initials</label>
@@ -172,8 +183,12 @@ export default function Scoreboard(props) {
         }}
       >
         <h3 className={dark ? "dark" : null}>Top Scores:</h3>
-        {loading && <div>Loading, please wait...</div>}
-        {data.length > 0 && <ol>{renderScores}</ol>}
+        {loading && (
+          <div className={dark ? "dark" : null}>Loading, please wait...</div>
+        )}
+        {data.length > 0 && (
+          <ol style={{ paddingLeft: "0px" }}>{renderScores}</ol>
+        )}
         {error && <div>{error}</div>}
       </div>
     </div>
