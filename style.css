@@ -458,5 +458,32 @@ hr {
 }
 
 .bg-dark {
-  background-color: #191632;
+  background-color: #191632 !important;
+}
+
+.post-score {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem auto 1rem auto;
+  padding: 1.5rem;
+  border: 0.3rem #3ac0ff solid;
+  border-radius: 2rem;
+  text-align: center;
+  line-height: 2;
+}
+
+.score-item {
+  background-color: white;
+  padding: 0.75rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  list-style: inside;
+  font-size: 1.25rem;
+  font-weight: bold;
+  list-style-type: inherit;
+  width: fit-content;
+  border-radius: 0.75rem;
+  box-shadow: 0px 3px 5px rgb(0 0 0 / 10%);
 }
