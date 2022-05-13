@@ -458,7 +458,10 @@ hr {
 }
 
 .bg-dark {
-  background-color: #191632 !important;
+  background-color: #191632;
+}
+.bg-light {
+  background-color: #e1dfeb;
 }
 
 .post-score {
@@ -475,7 +478,7 @@ hr {
 }
 
 .score-item {
-  background-color: white;
+  /* background-color: white; */
   padding: 0.75rem;
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
