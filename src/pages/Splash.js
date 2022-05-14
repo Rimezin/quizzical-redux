@@ -202,6 +202,22 @@ export default function Splash(props) {
     });
   }
 
+  //// SHARE ////
+  function handleShare() {
+    const shareData = {
+      title: "Quizzical",
+      text: "A trivia game you never knew you needed!",
+      url: "https://rimezin.github.io/quizzical-redux/",
+    };
+
+    try {
+      navigator.share(shareData);
+      console.log("SHARE | shared successfully");
+    } catch (err) {
+      console.log("SHARE | Error: " + err);
+    }
+  }
+
   ///////////////////////////////////////////////////
   /////////// SPLASH RENDERING //////////////////////
   ///////////////////////////////////////////////////
@@ -255,7 +271,7 @@ export default function Splash(props) {
         onClick={nextPage}
         color="violet"
         style={{
-          width: "18rem",
+          width: "19rem",
           backgroundColor: dark ? "#191632" : "#6435c9",
           color: dark ? "#aca7c8" : "white",
           margin: "0 0 1rem 0",
@@ -267,7 +283,7 @@ export default function Splash(props) {
         <Button.Content hidden>Let's get quizzical!</Button.Content>
         <Button.Content visible>Start Game</Button.Content>
       </Button>
-      <ButtonGroup style={{ width: "18rem", zIndex: "1" }}>
+      <ButtonGroup style={{ width: "19rem", zIndex: "1" }}>
         <Button
           color="violet"
           basic={dark ? true : false}
@@ -296,6 +312,15 @@ export default function Splash(props) {
           onClick={handleSettings}
         />
         <Button
+          color="green"
+          basic={dark ? true : false}
+          style={{ fontWeight: "700" }}
+          icon="share alternate"
+          inverted
+          type="button"
+          onClick={handleShare}
+        />
+        <Button
           color="blue"
           basic={dark ? true : false}
           style={{ fontWeight: "700" }}
@@ -312,7 +337,7 @@ export default function Splash(props) {
         onClick={() => handleScoreboard(true, 0, false)}
         content="Scoreboard"
         style={{
-          width: "18rem",
+          width: "19rem",
           margin: "1rem 0 1rem 0",
           zIndex: "1",
         }}
@@ -326,7 +351,7 @@ export default function Splash(props) {
         <Flag name="ua" />
         <br />
         <br />
-        v4.2
+        v4.21
       </span>
     </form>
   );

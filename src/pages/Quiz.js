@@ -245,6 +245,23 @@ export default function Quiz(props) {
     setStage(11);
   }
 
+  //// SHARE ////
+  function handleShare() {
+    handleSound("button");
+    const shareData = {
+      title: "Quizzical",
+      text: `I scored ${score} on Quizzical!!`,
+      url: "https://rimezin.github.io/quizzical-redux/",
+    };
+
+    try {
+      navigator.share(shareData);
+      console.log("SHARE | shared successfully");
+    } catch (err) {
+      console.log("SHARE | Error: " + err);
+    }
+  }
+
   return (
     <div
       className={`quizzical-container ${
@@ -262,12 +279,24 @@ export default function Quiz(props) {
           <Button
             color="violet"
             basic={dark ? true : false}
-            style={{ fontWeight: "700", maxWidth: "3rem" }}
+            style={{ fontWeight: "700", maxWidth: "fit-content" }}
             icon="setting"
             inverted
             type="button"
             onClick={handleSettings}
           />
+          {stage === 10 && (
+            <Button
+              color="green"
+              basic={dark ? true : false}
+              style={{ fontWeight: "700", maxWidth: "fit-content" }}
+              icon="share alternate"
+              inverted
+              type="button"
+              content="Share Result"
+              onClick={handleShare}
+            />
+          )}
           {stage < 10 && (
             <Button
               color="violet"

@@ -15,19 +15,19 @@ export default function Scoreboard(props) {
   });
 
   // Determine Date //
-  const date = () => {
+  function getDate() {
     let date = new Date();
     date = `${
       date.getUTCMonth() + 1
     }/${date.getUTCDate()}/${date.getUTCFullYear()} - ${date.getUTCHours()}:${date.getUTCMinutes()} (UTC)`;
     return date;
-  };
+  }
 
   // Handle Form Data //
   const [formData, setFormData] = React.useState({
     name: "",
     score: scoreboard.score,
-    date: date,
+    date: getDate(),
     difficulty: scoreboard.difficulty,
   });
 
@@ -148,7 +148,7 @@ export default function Scoreboard(props) {
           <h3 className={dark ? "dark" : null}>
             Score: {scoreboard.score} {scoreboard.difficulty}
           </h3>
-          <h4 className={dark ? "dark" : null}>Date: {date}</h4>
+          <h4 className={dark ? "dark" : null}>Date: {getDate()}</h4>
           <Form.Field>
             <label className={dark ? "dark" : null}>Initials</label>
             <input
