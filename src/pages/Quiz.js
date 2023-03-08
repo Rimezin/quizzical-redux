@@ -5,13 +5,14 @@ import he from "he";
 import { Button, ButtonGroup } from "semantic-ui-react";
 import Score from "../assets/Score";
 import AnswerKey from "./AnswerKey";
+import { DarkMode } from "../App";
+import { Util } from "../util";
 
 export default function Quiz(props) {
   const {
     difficulty,
     category,
     setPage,
-    dark,
     setDifficulty,
     setCategory,
     setModal,
@@ -21,6 +22,7 @@ export default function Quiz(props) {
     prevPage,
     handleScoreboard,
   } = props;
+  const dark = React.useContext(DarkMode);
 
   const [questions, setQuestions] = React.useState([]);
   const [questionsValid, setQuestionsValid] = React.useState(false);
@@ -28,33 +30,13 @@ export default function Quiz(props) {
   const [stage, setStage] = React.useState(0);
   const [finalSound, setFinalSound] = React.useState(false);
 
-  // This shuffle array function from coolaj86 on Stack Overflow.
-  function shuffle(array) {
-    let currentIndex = array.length,
-      randomIndex;
-
-    // While there remain elements to shuffle.
-    while (currentIndex !== 0) {
-      // Pick a remaining element.
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-
-      // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex],
-        array[currentIndex],
-      ];
-    }
-    return array;
-  }
-
   // Main effect used to gather the questions.
   React.useEffect(() => {
     function getAnswers(questionObj) {
       let correctAnswer = [questionObj.correct_answer];
       let allAnswers = questionObj.incorrect_answers;
       allAnswers = allAnswers.concat(correctAnswer);
-      allAnswers = shuffle(allAnswers);
+      allAnswers = Util.shuffleArray(allAnswers);
 
       return allAnswers;
     }
@@ -200,7 +182,6 @@ export default function Quiz(props) {
         question={question}
         handleChange={handleChange}
         dark={dark}
-        score={score}
         handleReset={handleReset}
         setStage={setStage}
         setScore={setScore}
@@ -378,7 +359,6 @@ export default function Quiz(props) {
             score={score}
             difficulty={difficulty}
             category={category}
-            dark={dark}
             goodGame={goodGame()}
           />
           <Button
@@ -410,7 +390,7 @@ export default function Quiz(props) {
           />
         </div>
       )}
-      {stage === 11 && <AnswerKey questions={questions} dark={dark} />}
+      {stage === 11 && <AnswerKey questions={questions} />}
     </div>
   );
 }

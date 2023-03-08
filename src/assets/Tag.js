@@ -1,7 +1,9 @@
 import React from "react";
+import { DarkMode } from "../App";
 
 export default function Tag(props) {
-  const { dark, text } = props;
+  const { text } = props;
+  const dark = React.useContext(DarkMode);
 
   // Establish category colors
   const catColors = {

@@ -1,16 +1,17 @@
 import React from "react";
 import { Button, ButtonGroup, Icon } from "semantic-ui-react";
+import { DarkMode } from "../App";
 
 export default function Difficulty(props) {
   const {
     prevPage,
     nextPage,
-    dark,
     handleSound,
     handleSettings,
     difficulty,
     chooseDifficulty,
   } = props;
+  const dark = React.useContext(DarkMode);
 
   // Handle Difficulty Selection //
   function handleDifficulty(event) {

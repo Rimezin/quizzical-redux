@@ -1,7 +1,9 @@
 import React from "react";
+import { DarkMode } from "../App";
 
 export default function Answer(props) {
-  const { question, answer, handleChange, checked, dark, handleSound } = props;
+  const { question, answer, handleChange, checked, handleSound } = props;
+  const dark = React.useContext(DarkMode);
 
   // Determine styling for answer //
   function setBackground() {

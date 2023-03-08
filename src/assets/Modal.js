@@ -1,8 +1,11 @@
 import React from "react";
+import { DarkMode } from "../App";
 import { Button } from "semantic-ui-react";
 
 export default function Modal(props) {
-  const { modal, setModal, dark, handleSound } = props;
+  const { modal, setModal, handleSound } = props;
+
+  const dark = React.useContext(DarkMode);
 
   function handleClose() {
     setModal((modal) => ({

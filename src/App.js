@@ -33,8 +33,11 @@ import Difficulty from "./pages/Difficulty";
 import { Button, ButtonGroup } from "semantic-ui-react";
 import Scoreboard from "./pages/Scoreboard";
 
+// Contexts //
+const DarkMode = React.createContext();
+
 // Main Function Start //
-export default function App() {
+function App() {
   ///////////////////
   //// Dark Mode ////
   const [dark, setDark] = useStickyState(false, "quizzical-dark");
@@ -52,7 +55,7 @@ export default function App() {
   const [playMusic, { pause }] = useSound(pleasantPorridge, {
     loop: true,
     autoplay: musicPlaying,
-    volume: 0.5,
+    volume: 0.25,
   });
 
   function handleMusic() {
@@ -70,8 +73,9 @@ export default function App() {
     document.getElementById("quizzical-app").click();
   });
 
-  ////////////////
-  //// Sounds ////
+  ///////////////////////////////////////////////////////////////////////
+  //// Sounds ///////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
   const [playClick] = useSound(click, { volume: "0.25" });
   const [playButton] = useSound(button, { volume: "0.5" });
   const [playButtonNo] = useSound(buttonNo, { volume: "0.5" });
@@ -138,8 +142,9 @@ export default function App() {
     handleSound("toggle");
   }
 
-  /////////////////////////
-  //// State for modal ////
+  //////////////////////////////////////////////////////////////////////
+  //// State for modal /////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////
   const [modal, setModal] = React.useState({
     show: false,
     icon: "question circle",
@@ -160,8 +165,10 @@ export default function App() {
     setSettings(!settings);
   }
 
-  /////////////////////////////////
-  //// GAME STATES & FUNCTIONS ////
+  ///////////////////////////////////////////////////////////////////////////////////////////
+  //// GAME STATES & FUNCTIONS //////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////
+
   // Pages //
   const [page, setPage] = React.useState(0);
   /**
@@ -224,132 +231,128 @@ export default function App() {
   /////////////////////////////////////////
 
   return (
-    <div id="quizzical-app" className={dark ? "body body-dark" : "body"}>
-      <Modal
-        modal={modal}
-        setModal={setModal}
-        dark={dark}
-        handleSound={handleSound}
-      />
-      {/* Top Bar */}
-      <div
-        className={`topBar ${!settings ? "slide" : ""}`}
-        style={{ backgroundColor: dark ? "#35304f" : "#dad8e7" }}
-      >
-        <ButtonGroup>
-          <Button
-            type="button"
-            color={dark ? "grey" : "violet"}
-            onClick={handleDark}
-            icon={dark ? "sun" : "moon"}
-            content={dark ? "Light" : "Dark"}
-            inverted
-          />
-          <Button
-            id="music-button"
-            type="button"
-            onClick={handleMusic}
-            icon={musicPlaying ? "music" : "dont"}
-            color={dark ? "grey" : "violet"}
-            content="Music"
-            inverted={true}
-            style={{ transition: ".75s" }}
-          />
-          <Button
-            id="music-button"
-            type="button"
-            onClick={handleSoundMute}
-            icon={!muteSound ? "volume up" : "volume off"}
-            color={dark ? "grey" : "violet"}
-            inverted={true}
-            content="Sounds"
-          />
-        </ButtonGroup>
-        <br />
+    <DarkMode.Provider value={dark}>
+      <div id="quizzical-app" className={dark ? "body body-dark" : "body"}>
+        <Modal modal={modal} setModal={setModal} handleSound={handleSound} />
+        {/* Top Bar */}
         <div
-          style={{ width: "100%", cursor: "pointer" }}
-          onClick={handleSettings}
+          className={`topBar ${!settings ? "slide" : ""}`}
+          style={{ backgroundColor: dark ? "#35304f" : "#dad8e7" }}
         >
-          <i className="ellipsis horizontal violet inverted icon icon-button"></i>
+          <ButtonGroup>
+            <Button
+              type="button"
+              color={dark ? "grey" : "violet"}
+              onClick={handleDark}
+              icon={dark ? "sun" : "moon"}
+              content={dark ? "Light" : "Dark"}
+              inverted
+            />
+            <Button
+              id="music-button"
+              type="button"
+              onClick={handleMusic}
+              icon={musicPlaying ? "music" : "dont"}
+              color={dark ? "grey" : "violet"}
+              content="Music"
+              inverted={true}
+              style={{ transition: ".75s" }}
+            />
+            <Button
+              id="music-button"
+              type="button"
+              onClick={handleSoundMute}
+              icon={!muteSound ? "volume up" : "volume off"}
+              color={dark ? "grey" : "violet"}
+              inverted={true}
+              content="Sounds"
+            />
+          </ButtonGroup>
+          <br />
+          <div
+            style={{ width: "100%", cursor: "pointer" }}
+            onClick={handleSettings}
+          >
+            <i className="ellipsis horizontal violet inverted icon icon-button"></i>
+          </div>
         </div>
+
+        {/* Splash - Page 0 */}
+        {page === 0 && (
+          <Splash
+            // clickStart={clickStart}
+            nextPage={nextPage}
+            prevPage={prevPage}
+            setModal={setModal}
+            handleSound={handleSound}
+            handleSettings={handleSettings}
+            handleScoreboard={handleScoreboard}
+          />
+        )}
+
+        {/* Difficulty - Page 1 */}
+        {page === 1 && (
+          <Difficulty
+            nextPage={nextPage}
+            prevPage={prevPage}
+            dark={dark}
+            setModal={setModal}
+            handleSound={handleSound}
+            handleSettings={handleSettings}
+            //
+            difficulty={difficulty}
+            chooseDifficulty={chooseDifficulty}
+          />
+        )}
+
+        {/* Category - Page 2 */}
+        {page === 2 && (
+          <Category
+            nextPage={nextPage}
+            prevPage={prevPage}
+            dark={dark}
+            setModal={setModal}
+            handleSound={handleSound}
+            handleSettings={handleSettings}
+            //
+            category={category}
+            chooseCategory={chooseCategory}
+          />
+        )}
+
+        {/* Quiz - Page 3 */}
+        {page === 3 && (
+          <Quiz
+            // setStartQuiz={setStartQuiz}
+            prevPage={prevPage}
+            setPage={setPage}
+            setModal={setModal}
+            handleSound={handleSound}
+            settings={settings}
+            handleSettings={handleSettings}
+            //
+            difficulty={difficulty}
+            setDifficulty={setDifficulty}
+            //
+            category={category}
+            setCategory={setCategory}
+            //
+            scoreboard={scoreboard}
+            handleScoreboard={handleScoreboard}
+          />
+        )}
+        {/* Scoreboard */}
+        {page === 4 && (
+          <Scoreboard
+            scoreboard={scoreboard}
+            handleScoreboard={handleScoreboard}
+            handleSettings={handleSettings}
+            handleSound={handleSound}
+          />
+        )}
       </div>
-
-      {/* Splash - Page 0 */}
-      {page === 0 && (
-        <Splash
-          // clickStart={clickStart}
-          nextPage={nextPage}
-          prevPage={prevPage}
-          dark={dark}
-          setModal={setModal}
-          handleSound={handleSound}
-          handleSettings={handleSettings}
-          handleScoreboard={handleScoreboard}
-        />
-      )}
-
-      {/* Difficulty - Page 1 */}
-      {page === 1 && (
-        <Difficulty
-          nextPage={nextPage}
-          prevPage={prevPage}
-          dark={dark}
-          setModal={setModal}
-          handleSound={handleSound}
-          handleSettings={handleSettings}
-          //
-          difficulty={difficulty}
-          chooseDifficulty={chooseDifficulty}
-        />
-      )}
-
-      {/* Category - Page 2 */}
-      {page === 2 && (
-        <Category
-          nextPage={nextPage}
-          prevPage={prevPage}
-          dark={dark}
-          setModal={setModal}
-          handleSound={handleSound}
-          handleSettings={handleSettings}
-          //
-          category={category}
-          chooseCategory={chooseCategory}
-        />
-      )}
-
-      {/* Quiz - Page 3 */}
-      {page === 3 && (
-        <Quiz
-          // setStartQuiz={setStartQuiz}
-          prevPage={prevPage}
-          setPage={setPage}
-          dark={dark}
-          setModal={setModal}
-          handleSound={handleSound}
-          settings={settings}
-          handleSettings={handleSettings}
-          //
-          difficulty={difficulty}
-          setDifficulty={setDifficulty}
-          //
-          category={category}
-          setCategory={setCategory}
-          //
-          scoreboard={scoreboard}
-          handleScoreboard={handleScoreboard}
-        />
-      )}
-      {/* Scoreboard */}
-      {page === 4 && (
-        <Scoreboard
-          scoreboard={scoreboard}
-          handleScoreboard={handleScoreboard}
-          dark={dark}
-          handleSettings={handleSettings}
-          handleSound={handleSound}
-        />
-      )}
-    </div>
+    </DarkMode.Provider>
   );
 }
+
+export { App, DarkMode };

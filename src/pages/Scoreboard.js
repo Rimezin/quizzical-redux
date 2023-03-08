@@ -1,11 +1,13 @@
 import axios from "axios";
 import React from "react";
+import { DarkMode } from "../App";
 import { ButtonGroup, Button, Form } from "semantic-ui-react";
 import useGoogleSheets from "use-google-sheets";
+import { Util } from "../util";
 
 export default function Scoreboard(props) {
-  const { dark, scoreboard, handleScoreboard, handleSettings, handleSound } =
-    props;
+  const { scoreboard, handleScoreboard, handleSettings, handleSound } = props;
+  const dark = React.useContext(DarkMode);
   const [disable, setDisable] = React.useState(false);
 
   // Get Data //
@@ -14,20 +16,11 @@ export default function Scoreboard(props) {
     sheetId: process.env.REACT_APP_DB_ID,
   });
 
-  // Determine Date //
-  function getDate() {
-    let date = new Date();
-    date = `${
-      date.getUTCMonth() + 1
-    }/${date.getUTCDate()}/${date.getUTCFullYear()} - ${date.getUTCHours()}:${date.getUTCMinutes()} (UTC)`;
-    return date;
-  }
-
   // Handle Form Data //
   const [formData, setFormData] = React.useState({
     name: "",
     score: scoreboard.score,
-    date: getDate(),
+    date: Util.date.getFormattedDate(),
     difficulty: scoreboard.difficulty,
   });
 
@@ -112,15 +105,6 @@ export default function Scoreboard(props) {
             type="button"
             onClick={handleSettings}
           />
-          {/* {scoreboard.postable && (
-            <Button
-              content="Back"
-              color="purple"
-              icon="left arrow"
-              inverted={dark ? true : false}
-              onClick={handleBack()}
-            />
-          )} */}
           <Button
             content={scoreboard.postable ? "New Game" : "Back"}
             color="violet"
@@ -138,7 +122,6 @@ export default function Scoreboard(props) {
           />
         </ButtonGroup>
       </div>
-      {/* {renderScores} */}
       {scoreboard.postable && (
         <Form
           onSubmit={handleSubmit}
@@ -148,7 +131,9 @@ export default function Scoreboard(props) {
           <h3 className={dark ? "dark" : null}>
             Score: {scoreboard.score} {scoreboard.difficulty}
           </h3>
-          <h4 className={dark ? "dark" : null}>Date: {getDate()}</h4>
+          <h4 className={dark ? "dark" : null}>
+            Date: {Util.date.getFormattedDate()}
+          </h4>
           <Form.Field>
             <label className={dark ? "dark" : null}>Initials</label>
             <input

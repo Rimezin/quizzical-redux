@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Divider, Segment } from "semantic-ui-react";
+import { DarkMode } from "../App";
 import Answer from "./Answer";
 import Tag from "./Tag";
 import Timer from "./Timer";
@@ -9,8 +10,6 @@ export default function QuestionRedux(props) {
     handleReset,
     question,
     handleChange,
-    score,
-    dark,
     setStage,
     setScore,
     difficulty,
@@ -20,6 +19,7 @@ export default function QuestionRedux(props) {
     settings,
     handleSettings,
   } = props;
+  const dark = React.useContext(DarkMode);
 
   const [checked, setChecked] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -47,7 +47,6 @@ export default function QuestionRedux(props) {
         question={question}
         handleChange={handleChange}
         checked={checked}
-        dark={dark}
         seconds={seconds}
         handleSound={handleSound}
       />
@@ -169,7 +168,6 @@ export default function QuestionRedux(props) {
         <Timer
           seconds={seconds}
           setSeconds={setSeconds}
-          dark={dark}
           checked={checked}
           handleSound={handleSound}
         />
@@ -180,7 +178,7 @@ export default function QuestionRedux(props) {
             margin: "0 auto 1rem auto",
           }}
         >
-          <Tag dark={dark} text={question.category} />
+          <Tag text={question.category} />
         </div>
       </div>
       <div className="question-container">
@@ -206,7 +204,6 @@ export default function QuestionRedux(props) {
           marginBottom: "1rem",
           left: "50%",
           transform: "translateX(-50%)",
-          // height: "63px",
         }}
       >
         <div

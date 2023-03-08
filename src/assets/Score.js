@@ -1,9 +1,10 @@
 import React from "react";
+import { DarkMode } from "../App";
 import Party from "./Confetti";
 
 export default function Score(props) {
-  const { score, difficulty, category, dark, goodGame } = props;
-
+  const { score, difficulty, category, goodGame } = props;
+  const dark = React.useContext(DarkMode);
   return (
     <>
       {goodGame && <Party />}

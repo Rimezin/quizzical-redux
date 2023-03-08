@@ -1,5 +1,6 @@
 import React from "react";
 import { Icon } from "semantic-ui-react";
+import { DarkMode } from "../App";
 
 export default function Card(props) {
   // value={category.value}
@@ -7,7 +8,8 @@ export default function Card(props) {
   // clickAction={categoryClick}
   // key={category.key}
   // text={category.text}
-  const { value, icon, action, text, category, dark } = props;
+  const { value, icon, action, text, category } = props;
+  const dark = React.useContext(DarkMode);
 
   return (
     <div

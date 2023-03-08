@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, ButtonGroup, Icon } from "semantic-ui-react";
+import { DarkMode } from "../App";
 import Card from "../assets/Card";
 
 export default function Category(props) {
@@ -7,13 +8,12 @@ export default function Category(props) {
     // clickStart,
     prevPage,
     nextPage,
-    dark,
-    // setModal,
     handleSound,
     handleSettings,
     category,
     chooseCategory,
   } = props;
+  const dark = React.useContext(DarkMode);
 
   const categories = [
     {
@@ -257,7 +257,6 @@ export default function Category(props) {
         key={cat.key}
         text={cat.text}
         category={category}
-        dark={dark}
       />
     );
   });

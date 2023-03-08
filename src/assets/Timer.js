@@ -1,7 +1,9 @@
 import React from "react";
+import { DarkMode } from "../App";
 
 export default function Timer(props) {
-  const { seconds, setSeconds, dark, checked, handleSound } = props;
+  const { seconds, setSeconds, checked, handleSound } = props;
+  const dark = React.useContext(DarkMode);
 
   React.useEffect(() => {
     let myInterval = setInterval(() => {

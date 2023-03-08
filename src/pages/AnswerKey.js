@@ -1,9 +1,11 @@
 import React from "react";
 import { Segment, Label } from "semantic-ui-react";
 import he from "he";
+import { DarkMode } from "../App";
 
 export default function AnswerKey(props) {
-  const { dark, questions } = props;
+  const { questions } = props;
+  const dark = React.useContext(DarkMode);
 
   const renderQuestions = questions.map((question) => {
     return (

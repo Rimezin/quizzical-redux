@@ -1,13 +1,13 @@
 import React from "react";
-import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
+import useWindowSize from "../hooks/useWindowSize";
 
 export default function Party() {
-  const { width, height } = useWindowSize();
+  const [win] = useWindowSize();
   return (
     <Confetti
-      width={width}
-      height={height}
+      width={win.width}
+      height={win.height}
       initialVelocityY={{ min: -10, max: -4 }}
       gravity={0.07}
     />
